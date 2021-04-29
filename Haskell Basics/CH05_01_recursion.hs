@@ -12,7 +12,7 @@ fib 0 = 0
 fib 1 = 1
 fib x = fib (x-1) + fib (x-2)
 
--- -----------------------------------------------------------------------------------------------
+-- -------------------------------------
 -- recreate maximum value from list
 -- recreate `max`, call it max' & mx2'
 maxi' :: (Ord h) => [h] -> h
@@ -40,7 +40,7 @@ maxi2' [x] = x
 maxi2' (x:xs) = max' [x, maxi2' xs] -- maxi2' does the exact same thing as maxi' defined above
 
 
--- --------------------------------------------------------------------------------------------------
+-- -------------------------------------
 -- recreate `replicate` function, calle it replicate' & replicate2'
 
 replicate' :: (Num i, Ord i) => i -> a -> [a]
@@ -48,7 +48,7 @@ replicate' n x
     | n <= 0 = []
     | otherwise = x:replicate' (n-1) x
     
--- --------------------------------------------------------------------------------------------------
+-- -------------------------------------
     
 -- replicate `take` calle it take' & take2'
 take' :: (Num i, Ord i) => i -> [a] -> [a]
@@ -65,7 +65,7 @@ take2' n x
     | otherwise = (head x):take2' (n-1) (tail x)
 
                                           
--- --------------------------------------------------------------------------------------------------
+-- -------------------------------------
 -- recreate `reverse`, calle it reverse' & reverse2'
 
 reverse' :: [a] -> [a]
@@ -77,9 +77,51 @@ reverse2' [] = []
 reverse2' x = (last x):reverse2' (init x)
 
 
--- ------------------------------------------------------------------------------------------------
--- recreate `repeat`, call it repeat' & repeat2'
+-- -------------------------------------
+-- recreate `repeat`, call it repeat'
+
+repeat' :: a -> [a]
+repeat' x = x:repeat' x
+
+-- --------------------------------------
+-- recreate `zip`, calle it zip'
+
+zip' :: [a] -> [b] -> [(a,b)]
+zip' _ [] = []
+zip' [] _ = []
+zip' (x:xs)(y:ys) = (x,y):zip' xs ys
+
+
+-- --------------------------------------
+-- recreate `elem` and calle it elem` & elem2
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' a [] = False
+elem' a (x:xs)
+    | x == a = True
+    | otherwise = elem' a xs
+
+elem2' :: (Eq a) => a -> [a] -> Bool
+elem2' a [] = False
+elem2' a x
+    | (head x) == a = True
+    | otherwise = elem2' a $ tail x
     
+    
+    
+-- ------------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------------
+-- 5.4 QUICK SORT!
+
+quicksort' :: (Ord a) => [a] -> [a]
+quicksort' [] = []
+quicksort' (x:xs) = 
+    let smallerSorted = quicksort' [a | a <- xs, a <= x]
+        biggerSorted = quicksort' [a | a <- xs, a > x]
+    in smallerSorted ++ [x] ++ biggerSorted
+    
+    
+
 
 
 
