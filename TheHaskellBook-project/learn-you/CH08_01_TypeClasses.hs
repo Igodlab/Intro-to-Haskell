@@ -157,7 +157,7 @@ lockerLookup n lm = case Map.lookup n lm of
     Nothing -> Left $ "Locker number: " ++ show n ++ " doesn't exist!"
     Just (state, code) -> if state /= Taken
                           then Right code
-                          else Left $ "Locker " ++ show n ++ " is already taken!"
+                          else Left $ "Locker " ++ show n ++ " is already " ++ show(state)
 
 lockers :: LockerMap
 lockers = Map.fromList
@@ -175,13 +175,51 @@ lockers = Map.fromList
 -- -------------------------------------------------------------------                     
 -- ------------------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------------------
--- 8.5 Recursive data structures (pg. 101)
+-- 8.6 Recursive data structures (pg. 101)
 -- as the name suggests we can also define types that are synonyms
 
+-- lets implement our own list
+-- it is also possible to define our own infix operators
+--
+data List a = Empty | Elem {listHead :: a, listTail :: List a} deriving (Show, Read, Eq, Ord)
+
+infixr 5 :-:
+data List' a = Empty' | a :-: (List' a) deriving (Show, Read, Eq, Ord)
+
+-- example 2
+infixr 5 ++++
+
+(++++) :: [a] -> [a] -> [a]
+[] ++++ ys     = ys
+(x:xs) ++++ ys = x : (xs ++++ ys)
+
+-- BINARY SEARCH TREE
+-- Traditionally binary trees have nodes to the left as smaller values and nodes to the right as larger
+--
+data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Eq, Read)
+
+singleton :: a -> Tree a
+singleton x = Node x EmptyTree EmptyTree
+
+treeInsert :: (Ord a) => a -> Tree a -> Tree a
+treeInsert n EmptyTree = singleton n
+treeInsert n (Node a left right)
+    | n == a = Node n left right
+    | n < a  = Node a (treeInsert n left) right
+    | n > a  = Node a left (treeInsert n right)
+
+treeElem :: (Ord a) => a -> Tree a ->Bool
+treeElem x EmptyTree = False
+treeElem x (Node a left right)
+    | x == a = True
+    | x < a  = treeElem x left
+    | x > a  = treeElem x right
 
 
 
 
+
+-- we'll make a function to build our trees
 
 
 
