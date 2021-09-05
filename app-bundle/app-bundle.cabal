@@ -15,11 +15,26 @@ version:            0.1.0.0
 -- license:
 author:             Igodlab
 maintainer:         igodlab@gmail.com
+Build-Type:         Simple
+Copyright:          © 2021 Igodlab
+License:            Apache-2.0
+License-file:       LICENSE
 
 -- A copyright notice.
 -- copyright:
 -- category:
-extra-source-files: CHANGELOG.md
+extra-source-files: 
+    CHANGELOG.md
+    LICENSE
+    README.md
+    stack.yaml
+    .travis.yml
+    package.yaml
+
+data-files:
+    data/hamlet.txt
+    data/moves.txt
+    data/positions.txt
 
 executable app-bundle
     main-is:          Main.hs
@@ -30,5 +45,21 @@ executable app-bundle
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:    base ^>=4.14.1.0
-    hs-source-dirs:   app
+    hs-source-dirs:   app/move
     default-language: Haskell2010
+
+test-suite app-bundle
+    type:                exitcode-stdio-1.0
+    main-is:             RadarTest.hs
+    hs-source-dirs:      test/move
+    other-modules:       spec.model
+                       , spec.modelwithclose
+                       , spec.trace
+                       , spec.tracewithclose
+    ghc-options: -wall -werror -wcompat -widentities -wincomplete-uni-patterns -wincomplete-record-updates -wno-unused-top-binds -wno-orphans
+    build-depends:
+        base ^>=4.14.1.0 
+      , radar-lib
+      , random >=1.2 
+    default-language: Haskell2010
+
