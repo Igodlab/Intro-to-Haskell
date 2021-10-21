@@ -1,0 +1,89 @@
+##################################
+# page 19: Evaluate exercises
+#
+1. λxy.xz
+   = λx.λy.λz
+   = λmn.mz      # ans b)
+
+2. λxy.xxy
+   = λx.(λy.xxy)
+   = λa.(λb.aab) # ans c)
+
+3. λxyz.zx
+   = λtos.st     # ans b)
+
+
+##################################
+# page 25: Combinators
+# 
+# determine if the following are combinators or not
+#
+1. λx.xxx       # yes
+
+2. λxy.zx       # no, z not in head, it is a free variable
+
+3. λxyz.xy(zx)  # yes
+
+4. λxyz.xy(zxy) # yes
+
+5. λxy.xy(zxy)  # no, z not in head
+
+
+
+##################################
+# page 26: Normal form or Diverge?
+# 
+1. λx.xxx           # Normal form
+
+2. (λz.zz)(λy.yy)    
+   [z := (λy.yy)]
+   = (λy.yy)(λy.yy) # diverges, because it never stops evaluating
+
+3. (λx.xxx)z        # Normal form
+
+
+
+##################################
+# page 26: Beta reduce
+# 
+#
+1. (λabc.cba)zz(λwv.w)
+   = (λbc.cbz)z(λwv.w)
+   = (λc.czz)(λwv.w)
+   = (λwv.w)zz
+   = (λv.z)z
+   = z
+
+2. (λx.λy.xyy)(λa.a)b
+   = (λy.(λa.a)yy)b
+   = (λa.a)bb
+   = bb
+
+3. (λy.y)(λx.xx)(λz.zq)
+   = (λx.xx)(λz.zq)
+   = (λz.zq)(λz.zq)
+   = (λz.zq)q
+   = qq
+
+4. (λz.z)(λz.zz)(λz.zy)
+   = (λz.zz)(λz.zy)
+   = (λz.zy)(λz.zy)
+   = (λz.zy)y
+   = yy                 # is alpha equivalent to prob 3.
+
+5. (λx.λy.xyy)(λy.y)y
+   = (λy.(λy.y)yy)y
+   = (λy.y)yy
+   = yy
+
+6. (λa.aa)(λb.ba)c
+   = (λb.ba)(λb.ba)c
+   = (λb.ba)ac
+   = aac
+
+7. (λxyz.xz(yz))(λx.z)(λx.a)
+   = (λxyz'.xz'(yz'))(λx.z)(λx.a) # rename the bound z -> z' in the leftmost parenthesis
+   = (λyz'.(λx.z)z'(yz'))(λx.a)
+   = λz'.(λx.z)z'((λx.a)z')       # argument λz' has no variables to evaluate, skip eval to (λx.z)
+   = λz'.z((λx.a)z')
+   = λz'.za
