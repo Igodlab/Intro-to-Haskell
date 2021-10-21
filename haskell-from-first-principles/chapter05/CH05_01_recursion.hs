@@ -21,7 +21,8 @@ maxi' [q] = q
 maxi' (x:xs)
     | x > maxTail = x
     | otherwise = maxTail
-    where maxTail = maxi' xs
+  where 
+    maxTail = maxi' xs
     
     
 -- playing more with a function that returns the maximum value
@@ -31,8 +32,8 @@ max' lst
     | length lst /= 2 = error "list has to contain only two numbers"
     | x > y = x
     | x < y = y
-    where x = head lst
-          y = last lst
+  where x = head lst
+        y = last lst
 
 maxi2' :: (Ord a) => [a] -> a
 maxi2' [] = error "list is empy!"
@@ -108,7 +109,6 @@ elem2' a x
     | otherwise = elem2' a $ tail x
     
     
-    
 -- ------------------------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------------------------
 -- 5.4 QUICK SORT!
@@ -120,8 +120,3 @@ quicksort' (x:xs) =
         biggerSorted = quicksort' [a | a <- xs, a > x]
     in smallerSorted ++ [x] ++ biggerSorted
     
-    
-
-
-
-
