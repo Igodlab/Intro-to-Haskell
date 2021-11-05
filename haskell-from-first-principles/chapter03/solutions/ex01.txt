@@ -91,3 +91,30 @@ e) 10             # comes from: c)
 # 
 
 # See ex01.hs
+
+# 1. Given the list-manipulation functions mentioned in this chapter, write functions that take the following inputs and return the expected outputs. Do them directly in your REPL and use the take and drop functions you’ve already seen.
+
+a) -- Given
+   "Curry is awesome"
+   -- Return
+   "Curry is awesome!"
+# Ans: 
+λ> "Curry is awesome" ++ "!"
+"Curry is awesome!"
+
+b) -- Given
+   "Curry is awesome!"
+   -- Return
+   "y"
+# Ans:
+λ> take 1 $ drop 4 "Curry is awesome!"
+"y"
+
+c) -- Given
+   "Curry is awesome!"
+   -- Return
+   "awesome!"
+# Ans:
+λ> drop 9 "Curry is awesome!"
+"awesome!"
+
