@@ -241,3 +241,312 @@ c) takes a tuple argument and returns the first value # Ans: c)
 d) requires that 𝑎 and 𝑏 be of diﬀerent types
 
 
+
+
+##################################
+# page 226: Determine the type
+# 
+# see: determineType_pg226.hs
+
+Do your best to determine the most polymorphic type an expression could have in the following exercises. 
+
+
+1. All function applications return a value. Determine the value returned by these function applications and the type of that value.
+
+a) (* 9) 6                                    # Ans: 54 :: Num a => a
+b) head [(0,"doge"),(1,"kitteh")]             # Ans: (0,"doge") :: Num a => (a, [Char])
+c) head [(0 :: Integer ,"doge"),(1,"kitteh")] # Ans: (0,"doge") :: (Integer, [Char])
+d) if False then True else False              # Ans: False :: Bool
+e) length [1, 2, 3, 4, 5]                     # Ans: 5 :: Int
+f) (length [1, 2, 3, 4]) > (length "TACOCAT") # Ans: False :: Bool
+
+
+2. Given
+x = 5
+y = x + 5
+w = y * 10
+What is the type of w? 
+Ans: w :: Num a => a
+
+
+3. Given
+x = 5
+y = x + 5
+z y = y * 10
+What is the type of z?
+Ans: z :: Num a => a -> a
+
+
+4. Given
+x = 5
+y = x + 5
+f = 4 / y
+What is the type of f?
+Ans: f :: Fractional a -> a
+
+
+5. Given
+x = "Julie"
+y = " <3 "
+z = "Haskell"
+f = x ++ y ++ z
+What is the type of f?
+Ans: f :: [Char]
+
+
+
+##################################
+# page 229: Does it compile?
+# 
+# see: doesItCompile_pg229.hs
+
+For each set of expressions, figure out which expression, if any, causes the compiler to squawk at you (n.b. we do not mean literal squawking) and why. Fix it if you can.
+
+-- 1.
+bigNum = (^) 5 
+-- wahoo = bigNum $ 10
+wahoo = bigNum $ 10 -- possible fix
+
+
+-- 2.
+x = print
+y = print "woohoo!"
+z = x "hello world" -- compiles just fine
+
+-- 3.
+a3 = (+)
+b3 = 5
+-- c3 = b3 10
+-- d3 = c3 200
+c3 = a3 b3 10  -- possible fix
+d3 = a3 c3 200 -- possible fix
+
+-- 4.
+a4 = 12 + b4
+-- b4 = 10000 * c4
+c4 = 2 -- need to define c4 for this chunk to compile
+b4 = 10000 * c4
+
+
+##################################
+# page 229: Type variable or specific type constructor?
+# 
+
+1. You will be shown a type declaration, and you should categorize each type. The choices are a fully polymorphic type variable, constrained polymorphic type variable, or concrete type constructor. 
+
+f :: Num a => a -> b -> Int -> Int
+--           [0]  [1]   [2]    [3]
+Here, the answer would be: [0] : constrained polymorphic (Num) 
+                           [1] : fully polymorphic 
+                           [2] : concrete
+                           [3] : concrete
+
+
+2. Categorize each component of the type signature as described in the previous example.
+
+f :: zed -> Zed -> Blah
+--   [0]    [1]    [2]
+# Ans: [0] : fully polymorphic
+       [1] : concrete
+       [2] : concrete
+
+
+3. Categorize each component of the type signature
+
+f :: Enum b => a -> b -> C
+--   [0]      [1]  [2]  [3]
+# Ans: [0] : class constraint 
+       [1] : fully polymorphic
+       [2] : constrained polymorphic (to having instances of Enum)
+       [3] : concrete (whatever C typeclass is)
+
+
+4. Categorize each component of the type signature
+
+f :: f -> g -> C
+--  [0]  [1]  [2]
+# Ans: [0] : fully polymorphic
+       [1] : fully polymorphic
+       [2] : concrete (whatever C typeclass is)
+
+
+
+##################################
+# page 230: Write a type signature
+# 
+
+For the following expressions, please add a type signature. You should be able to rely on GHCi type inference to check your work, although you might not have precisely the same answer as GHCi gives (due to polymorphism, etc). 
+
+
+1. While we haven’t fully explained this syntax yet, you’ve seen it in Chapter 2 and as a solution to an exercise in Chapter 4. This syntax is a way of destructuring a single element of a list by pattern matching.
+
+functionH ::
+functionH (x:_) = x
+
+# Ans: functionH :: [a] -> a
+
+
+2. 
+functionC ::
+functionC x y =
+if (x > y) then True else False
+
+# Ans: functionC :: Ord a => a -> a -> Bool
+
+
+3. functionS ::
+functionS (x, y) = y
+
+# Ans: functionS :: (a, b) -> b
+
+
+
+
+##################################
+# page 231: Given a type, write the function
+# 
+
+You will be shown a type and a function that needs to be written. Use the information the type provides to determine what the function should do. We’ll also tell you how many ways there are to write the function. Syntactically diﬀerent but semantically equivalent implementations are not counted as being diﬀerent. For example, writing a function one way then rewriting the semantically identical function but using anonymous lambda syntax does not count as two implementations. To make things a little easier, we’ll demonstrate how to solve this kind of exercise. Given:
+
+myFunc :: (x -> y)
+-> (y -> z)
+-> c
+-> (a, x)
+-> (a, z)
+myFunc xToY yToZ _ (a, x) = undefined
+
+Talking through the above, we have a function that takes four arguments. The final result is a tuple with the type (a, z). It turns out, the 𝑐 argument is nowhere in our results and there’s nothing to do with it, so we use the underscore to ignore that. We named the two function arguments by their types and pattern matched on the tuple argument. The only way to get the second value of the tuple from the type 𝑥 to the type 𝑧 is to use both of the functions furnished to us. If we tried the following:
+
+myFunc xToY yToZ _ (a, x) =
+(a, (xToY x))
+
+We would get a type error that it expected the type 𝑧 but the actual type was 𝑦. That’s because we’re on the right path, but not quite done yet! Accordingly, the following should typecheck:
+
+myFunc :: (x -> y)
+-> (y -> z)
+-> c
+-> (a, x)
+-> (a, z)
+myFunc xToY yToZ _ (a, x) =
+(a, (yToZ (xToY x)))
+
+
+1. There is only one function definition that typechecks and doesn’t go into an infinite loop when you run it.
+
+i :: a -> a
+i = undefined
+
+# Ans: 
+i :: a -> a
+i x = x
+
+
+2. There is only one version that works.
+
+c :: a -> b -> a
+c = undefined
+
+# Ans:
+c :: a -> b -> a
+c x y = x
+
+
+3. Given alpha equivalence are c'' and c (see above) the same thing?
+
+c'' :: b -> a -> b
+c'' = ?
+
+# Ans:
+c'' :: b -> a -> b
+c'' x y = x
+
+
+4. Only one version that works.
+
+c' :: a -> b -> b
+c' = undefined
+
+# Ans:
+c' :: a -> b -> b
+c' x y = y
+
+
+5. There are multiple possibilities, at least two of which you’ve seen in previous chapters.
+
+r :: [a] -> [a]
+r = undefined
+
+# Ans: 
+r :: [a] -> [a]
+r xs = take n xs
+  where
+    n = 2
+
+
+6. Only one version that will typecheck.
+
+co :: (b -> c) -> (a -> b) -> a -> c
+co = undefined
+
+# Ans:
+co :: (b -> c) -> (a -> b) -> a -> c
+co b2c a2b xa = b2c $ a2b xa
+
+
+7. One version will typecheck.
+
+a :: (a -> c) -> a -> a
+a = undefined
+
+# Ans:
+a :: (a -> c) -> a -> a
+a a2c xa = xa
+
+
+8. One version will typecheck.
+
+a' :: (a -> b) -> a -> b
+a' = undefined
+
+# Ans:
+a' :: (a -> b) -> a -> b
+a' a2b xa = a2b xa
+
+
+
+##################################
+# page 234: Fix it
+# 
+# see: sing_pg234.hs
+# see: arith3broken_pg235.hs
+# 
+
+Won’t someone take pity on this poor broken code and fix it up? Be sure to check carefully for things like capitalization, parentheses, and indentation. 
+
+1. 
+module sing where
+fstString :: [Char] ++ [Char]
+fstString x = x ++ " in the rain"
+sndString :: [Char] -> Char
+sndString x = x ++ " over the rainbow"
+sing = if (x > y) then fstString x or sndString y
+where x = "Singin"
+x = "Somewhere"
+
+
+
+2. Now that it’s fixed, make a minor change and make it sing the other song. If you’re lucky, you’ll end up with both songs stuck in your head!
+
+
+
+3. 
+-- arith3broken.hs
+module Arith3Broken where
+main :: IO ()
+Main = do
+print 1 + 2
+putStrLn 10
+print (negate -1)
+print ((+) 0 blah)
+where blah = negate 1
+
