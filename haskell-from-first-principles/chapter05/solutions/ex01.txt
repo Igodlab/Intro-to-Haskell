@@ -1,3 +1,6 @@
+NOTE: To get λ type SHIFT + CTRL + u followed by 03bb.
+
+
 ##################################
 # page 191: Type Matching
 # 
@@ -143,3 +146,98 @@ Ans: It can only have one implementation where the second typeclass is returned,
 
 parametricity03 :: a -> b -> b
 parametricity03 a0 b0 = b0
+
+
+
+
+
+##################################
+# page 220: Apply Yourself
+# 
+#  see: applyYourself_pg220.hs
+
+Look at these pairs of functions. One function is unapplied, so the compiler will infer maximally polymorphic type. The second function has been applied to a value, so the inferred type signature may have become concrete, or at least less polymorphic. Figure out how the type would change and why, make a note of what you think the new inferred type would be and then check your work in GHCi.
+
+1. -- Type signature of general function
+(++) :: [a] -> [a] -> [a]
+-- How might that change when we apply
+-- it to the following value?
+myConcat x = x ++ " yo"
+
+Ans: -- new type a := Char
+λ> :t myConcat
+myConcat :: [Char] -> [Char] 
+
+
+2. -- General function
+(*) :: Num a => a -> a -> a
+-- Applied to a value
+myMult x = (x / 3) * 5
+
+Ans: -- new type is instance-constrained by Fractional
+λ> :t myMult 
+myMult :: Fractional a => a -> a
+
+
+3. take :: Int -> [a] -> [a]
+myTake x = take x "hey you"
+
+Ans: -- new type a := Char
+λ> :t myTake
+myTake :: Int -> [Char]
+
+
+4. (>) :: Ord a => a -> a -> Bool
+myCom x = x > (length [1..10])
+
+Ans: -- length forces to constrain the type to Int, and since Int has instance of Ord, then it is not necessary to specify it again in the type-constrain signature.
+λ> :myCom
+myCom :: Int -> Bool
+
+
+5. (<) :: Ord a => a -> a -> Bool
+myAlph x = x < 'z'
+
+Ans: -- 'z' forces the type to be constrained to Char, and Char has instance of Ord so no further signature details are needed
+λ> :t myAlph 
+myAlph :: Char -> Bool
+
+
+
+
+##################################
+# page 225: Multiple Choice
+# 
+
+1. A value of type [a] is
+
+a) a list of alphabetic characters
+b) a list of lists
+c) a list whose elements are all of some type 𝑎    # Ans: c)
+d) a list whose elements are all of diﬀerent types
+
+
+2. A function of type [[a]] -> [a] could
+
+a) take a list of strings as an argument     # Ans: a)
+b) transform a character into a string
+c) transform a string into a list of strings
+d) take two arguments
+
+
+3. A function of type [a] -> Int -> a
+
+a) takes one argument
+b) returns one element of type 𝑎 from a list # Ans: b)
+c) must return an Int value
+d) is completely fictional
+
+
+4. A function of type (a, b) -> a
+
+a) takes a list argument and returns a Char value
+b) has zero arguments
+c) takes a tuple argument and returns the first value # Ans: c)
+d) requires that 𝑎 and 𝑏 be of diﬀerent types
+
+
