@@ -2,7 +2,16 @@ NOTE: To get λ type SHIFT + CTRL + u followed by 03bb.
 
 
 ##################################
-# page xxx: topic xxx
+# page 272: `Eq` Instances
 # 
+# see Eq_Instances_pg272.hs
+#
+
+
+##################################
+# page 314: Chapter Exercises
+#           Multiple Choice
+# 
+#
 
 
