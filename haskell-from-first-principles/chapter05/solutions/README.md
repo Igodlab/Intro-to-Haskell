@@ -27,7 +27,7 @@ e) _ :: Ord a => a -> a -> Bool -- 1e)
 # 
 
 Given a function and its type, tell us what type results from applying some or all of the arguments.
-``haskell
+```haskell
 -- 1. If the type of f is a -> a -> a -> a, and the type of 𝑥 is Char then the type of f x is 
 
 a) Char -> Char -> Char # Ans: a)
@@ -117,6 +117,7 @@ e) a
 
 All you can do with a parametrically polymorphic value is pass or not pass it to some other expression. Prove that to yourself with these small demonstrations.
 
+```haskell
 1. Given the type a -> a, which is the type for id, attempt to make a function that terminates successfully that does something other than returning the same value. This is impossible, but you should try it anyway. 
 
 Ans: 
@@ -141,15 +142,13 @@ Ans: It can only have one implementation where the second typeclass is returned,
 
 parametricity03 :: a -> b -> b
 parametricity03 a0 b0 = b0
+```
 
 
 
 
-
-##################################
 # page 220: Apply Yourself
-# 
-#  see: applyYourself_pg220.hs
+##  see: `applyYourself_pg220.hs`
 
 Look at these pairs of functions. One function is unapplied, so the compiler will infer maximally polymorphic type. The second function has been applied to a value, so the inferred type signature may have become concrete, or at least less polymorphic. Figure out how the type would change and why, make a note of what you think the new inferred type would be and then check your work in GHCi.
 
@@ -218,9 +217,7 @@ myAlph :: Char -> Bool
 
 
 
-##################################
 # page 225: Multiple Choice
-# 
 
 ```haskell
 1. A value of type [a] is
