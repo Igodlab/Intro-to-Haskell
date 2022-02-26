@@ -88,4 +88,166 @@ d) only positive numbers
 #           Does it Typecheck
 #
 
+1. Does the following code typecheck? If not, why not?
+
+data Person = Person Bool
+printPerson :: Person -> IO ()
+printPerson person = putStrLn (show person)
+
+# Ans: No it won't, because Person doesn't have an instance for Show through show.
+
+
+2. Does the following typecheck? If not, why not?
+
+data Mood = Blah | Woot deriving Show
+settleDown x = if x == Woot then Blah else x
+
+# Ans: No it won't, Mood doesn't have an instace for Eq typeclass.
+
+
+3. If you were able to get settleDown to typecheck:
+
+a) What values are acceptable inputs to that function?
+# Ans: To get settleDown to typecheck we need to define an instance for Eq, and the only acceptable inputs would be of the data type Mood (Blah or Woot). There is type inference because of the `if then` comparison.
+b) What will happen if you try to run settleDown 9? Why?
+# Ans: Doesn't typecheck because settleDown expects soething of the Mood type as argument.
+c) What will happen if you try to run Blah > Woot? Why?
+# Ans: Doesn't typecheck becaue there is no instances for Ord.
+
+
+4. Does the following typecheck? If not, why not?
+
+type Subject = String
+type Verb = String
+type Object = String
+data Sentence = Sentence Subject Verb Object deriving (Eq, Show)
+s1 = Sentence "dogs" "drool"
+s2 = Sentence "Julie" "loves" "dogs"
+
+# Ans: Yes, it will typecheck. 
+
+
+
+##################################
+# page 318: Chapter Exercises
+#           Given a datatype declaration, what can we do?
+#
+
+Given the following datatype definitions:
+
+data Rocks = Rocks String deriving (Eq, Show)
+data Yeah = Yeah Bool deriving (Eq, Show)
+data Papu = Papu Rocks Yeah deriving (Eq, Show)
+
+Which of the following will typecheck? For the ones that don’t typecheck, why don’t they?
+
+1. phew = Papu "chases" True
+
+2. truth = Papu (Rocks "chomskydoz") (Yeah True)
+
+3. equalityForall :: Papu -> Papu -> Bool
+   equalityForall p p' = p == p'
+
+4. comparePapus :: Papu -> Papu -> Bool
+   comparePapus p p' = p > p'
+
+
+##################################
+# page 319: Chapter Exercises
+#           Match the types
+#
+# see: MatchTheTypes_pg319.hs
+
+1. For the following definition.
+    a) i :: Num a => a
+       i = 1
+    b) Try replacing the type signature with the following:
+       i :: a
+    # Ans: Not possible, there is no instance Num for a parametrically polymorphic variable `a`
+
+2.
+    a) f :: Float
+       f = 1.0
+    b) f :: Num a => a
+    # Ans: Not possible, because `1.0` doesn’t have instances that Num imposes eg. Int.
+
+3.
+    a) f :: Float
+       f = 1.0
+    b) f :: Fractional a => a
+    # Ans: It works
+
+4. Hint for the following: type :info RealFrac in your REPL.
+    a) f :: Float
+       f = 1.0
+    b) f :: RealFrac a => a
+    # Ans: It works because RealFrac inherits from Fractional.
+
+5.
+    a) freud :: a -> a
+       freud x = x
+    b) freud :: Ord a => a -> a
+    # Ans: It works but now `a` in more ad-hoc constrained to Ord typeclass
+
+6.
+    a) freud' :: a -> a
+       freud' x = x
+    b) freud' :: Int -> Int
+    # Ans: It works, we are just making `a` a concrete type
+
+7.
+    a) myX = 1 :: Int
+       sigmund :: Int -> Int
+       sigmund x = myX
+    b) sigmund :: a -> a
+    # Ans: It doesn’t work, the interpreter expects a parametrically polymorphic variable in sigmund definition rather than Int. But if the definition is `sigmund x = x` then we can pass `myX7` as an argument and it will work.
+
+8.
+    a) myX = 1 :: Int
+       sigmund' :: Int -> Int
+       sigmund' x = myX
+    b) sigmund' :: Num a => a -> a
+    # Ans: It won't work, because the interpreter expects a polymorphic value that has instance of Num. 
+
+9.
+    a) You’ll need to import sort from Data.List.
+       jung :: Ord a => [a] -> a
+       jung xs = head (sort xs)
+    b) jung :: [Int] -> Int
+    # Ans: It will work, because we are simply making our values concrete and Int has instances of Ord.
+
+10.
+    a) young :: [Char] -> Char
+       young xs = head (sort xs)
+    b) young :: Ord a => [a] -> a
+    # Ans: it also works, this is the inverse case than prob 9. Now we are extending polymorphism of variables constrained only by the Ord typeclass.
+
+11.
+    a) mySort :: [Char] -> [Char]
+       mySort = sort
+       signifier :: [Char] -> Char
+       signifier xs = head (mySort xs)
+    b) signifier :: Ord a => [a] -> a
+    # Ans: It will not work, because unlike `sort`, `mySort` only works with concrete types [Char].
+
+
+
+##################################
+# page 322: Chapter Exercises
+#           Type-Kwon-Do Two: Electric Typealoo
+#
+
+1. 
+chk :: Eq b => (a -> b) -> a -> b -> Bool
+chk = ???
+# Ans: 
+chk f x y = (==) y $ f x
+
+
+2. -- Hint: use some arithmetic operation to combine values of type 'b'. Pick one.
+
+arith :: Num b => (a -> b) -> Integer -> a -> b
+arith = ???
+# Ans: 
+arith f n x = f x + fromInteger n
 
