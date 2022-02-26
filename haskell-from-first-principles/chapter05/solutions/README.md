@@ -1,23 +1,20 @@
 NOTE: To get λ type SHIFT + CTRL + u followed by 03bb.
 
 
-##################################
 # page 191: Type Matching
-# 
 
 Match the function to its type signature.
 
-1. Functions:
 ```haskell
+-- 1. Functions:
 a) not    -- 2c)
 b) length -- 2d)
 c) concat -- 2b)
 d) head   -- 2a)
 e) (<)    -- 2e)
-```
 
-2. Type signatures:
-```haskell
+
+-- 2. Type signatures:
 a) _ :: [a] -> a                -- 1d)
 b) _ :: [[a]] -> [a]            -- 1c)
 c) _ :: Bool -> Bool            -- 1a)
@@ -30,8 +27,8 @@ e) _ :: Ord a => a -> a -> Bool -- 1e)
 # 
 
 Given a function and its type, tell us what type results from applying some or all of the arguments.
-
-1. If the type of f is a -> a -> a -> a, and the type of 𝑥 is Char then the type of f x is 
+``haskell
+-- 1. If the type of f is a -> a -> a -> a, and the type of 𝑥 is Char then the type of f x is 
 
 a) Char -> Char -> Char # Ans: a)
 b) x -> x -> x -> x
@@ -39,7 +36,7 @@ c) a -> a -> a
 d) a -> a -> a -> Char
 
 
-2. If the type of g is a -> b -> c -> b, then the type of g 0 'c' "woot" is
+-- 2. If the type of g is a -> b -> c -> b, then the type of g 0 'c' "woot" is
 
 a) String
 b) Char -> String
@@ -47,7 +44,7 @@ c) Int
 d) Char           # Ans: d)
 
 
-3. If the type of h is (Num a, Num b) => a -> b -> b, then the type of h 1.0 2 is:
+-- 3. If the type of h is (Num a, Num b) => a -> b -> b, then the type of h 1.0 2 is:
 
 a) Double
 b) Integer         
@@ -55,10 +52,10 @@ c) Integral b => b
 d) Num b => b      # Ans: d)
 
 
-Note that because the type variables 𝑎 and 𝑏 are diﬀerent, the compiler must assume that the types could be diﬀerent. 
+-- Note that because the type variables 𝑎 and 𝑏 are diﬀerent, the compiler must assume that the types could be diﬀerent. 
 
 
-4. If the type of h is (Num a, Num b) => a -> b -> b, then the type of h 1 (5.5 :: Double) is
+-- 4. If the type of h is (Num a, Num b) => a -> b -> b, then the type of h 1 (5.5 :: Double) is
 
 a) Integer
 b) Fractional b => b
@@ -66,7 +63,7 @@ c) Double            # Ans: c)
 d) Num b => b
 
 
-5. If the type of jackal is (Ord a, Eq b) => a -> b -> a, then the type of jackal "keyboard" "has the word jackal in it"
+-- 5. If the type of jackal is (Ord a, Eq b) => a -> b -> a, then the type of jackal "keyboard" "has the word jackal in it"
 
 a) [Char]              # Ans: a)
 b) Eq b => b
@@ -75,7 +72,7 @@ d) b
 e) Eq b => b -> [Char]
 
 
-6. If the type of jackal is (Ord a, Eq b) => a -> b -> a, then the type of jackal "keyboard" 
+-- 6. If the type of jackal is (Ord a, Eq b) => a -> b -> a, then the type of jackal "keyboard" 
 
 a) b
 b) Eq b => b
@@ -84,7 +81,7 @@ d) b -> [Char]
 e) Eq b => b -> [Char] # Ans: e)
 
 
-7. If the type of kessel is (Ord a, Num b) => a -> b -> a, then the type of kessel 1 2 is 
+-- 7. If the type of kessel is (Ord a, Num b) => a -> b -> a, then the type of kessel 1 2 is 
 
 a) Integer
 b) Int
@@ -94,7 +91,7 @@ e) Ord a => a
 f) Num a => a
 
 
-8. If the type of kessel is (Ord a, Num b) => a -> b -> a, then the type of kessel 1 (2 :: Integer) is 
+-- 8. If the type of kessel is (Ord a, Num b) => a -> b -> a, then the type of kessel 1 (2 :: Integer) is 
 
 a) (Num a, Ord a) => a # Ans: a)
 b) Int
@@ -104,21 +101,19 @@ e) Ord a => a
 f) Integer
 
 
-9. If the type of kessel is (Ord a, Num b) => a -> b -> a, then the type of kessel (1 :: Integer) 2 is
+-- 9. If the type of kessel is (Ord a, Num b) => a -> b -> a, then the type of kessel (1 :: Integer) 2 is
 
 a) Num a => a
 b) Ord a => a
 c) Integer             # Ans: c)
 d) (Num a, Ord a) => a
 e) a
+```
 
 
 
-
-##################################
 # page 213: Parametricity
-# 
-# see parametricity_p213.hs 
+### see `parametricity_p213.hs`
 
 All you can do with a parametrically polymorphic value is pass or not pass it to some other expression. Prove that to yourself with these small demonstrations.
 
@@ -158,50 +153,68 @@ parametricity03 a0 b0 = b0
 
 Look at these pairs of functions. One function is unapplied, so the compiler will infer maximally polymorphic type. The second function has been applied to a value, so the inferred type signature may have become concrete, or at least less polymorphic. Figure out how the type would change and why, make a note of what you think the new inferred type would be and then check your work in GHCi.
 
-1. -- Type signature of general function
+```haskell
+-- 1. Type signature of general function
 (++) :: [a] -> [a] -> [a]
 -- How might that change when we apply
 -- it to the following value?
 myConcat x = x ++ " yo"
+```
 
 Ans: -- new type a := Char
+```shell
 λ> :t myConcat
 myConcat :: [Char] -> [Char] 
-
+```
 
 2. -- General function
+```haskell
 (*) :: Num a => a -> a -> a
 -- Applied to a value
 myMult x = (x / 3) * 5
+```
 
 Ans: -- new type is instance-constrained by Fractional
+```shell
 λ> :t myMult 
 myMult :: Fractional a => a -> a
+```
 
-
-3. take :: Int -> [a] -> [a]
+3. 
+```haskell
+take :: Int -> [a] -> [a]
 myTake x = take x "hey you"
+```
 
 Ans: -- new type a := Char
+```shell
 λ> :t myTake
 myTake :: Int -> [Char]
+```
 
-
-4. (>) :: Ord a => a -> a -> Bool
+4. 
+```haskell
+(>) :: Ord a => a -> a -> Bool
 myCom x = x > (length [1..10])
+```
 
 Ans: -- length forces to constrain the type to Int, and since Int has instance of Ord, then it is not necessary to specify it again in the type-constrain signature.
+```shell
 λ> :myCom
 myCom :: Int -> Bool
+```
 
-
-5. (<) :: Ord a => a -> a -> Bool
+5. 
+```haskell
+(<) :: Ord a => a -> a -> Bool
 myAlph x = x < 'z'
+```
 
 Ans: -- 'z' forces the type to be constrained to Char, and Char has instance of Ord so no further signature details are needed
+```shell
 λ> :t myAlph 
 myAlph :: Char -> Bool
-
+```
 
 
 
@@ -209,6 +222,7 @@ myAlph :: Char -> Bool
 # page 225: Multiple Choice
 # 
 
+```haskell
 1. A value of type [a] is
 
 a) a list of alphabetic characters
@@ -239,14 +253,12 @@ a) takes a list argument and returns a Char value
 b) has zero arguments
 c) takes a tuple argument and returns the first value # Ans: c)
 d) requires that 𝑎 and 𝑏 be of diﬀerent types
+```
 
 
 
-
-##################################
 # page 226: Determine the type
-# 
-# see: determineType_pg226.hs
+## see: `determineType_pg226.hs`
 
 Do your best to determine the most polymorphic type an expression could have in the following exercises. 
 
@@ -527,10 +539,8 @@ print ((+) 0 blah)
 where blah = negate 1
 ```
 
-##################################
 # page 236: Type-Kwon-Do
-# 
-# 
+ 
 
 The idea is to only fill in what we’ve marked with ???. Not all terms will always be used in the intended solution for a problem. 
 
