@@ -2,7 +2,8 @@
 
 module Days where
 
-data DayOfWeek = Mon | Tue | Wed | Thu | Fri | Sat | Sun
+data DayOfWeek = Mon | Tue | Wed | Thu | Fri | Sat | Sun 
+--    deriving (Ord) -- values to the left are less than values to the right
 
 data Date = Date DayOfWeek Int 
 
@@ -15,6 +16,12 @@ instance Eq DayOfWeek where
     (==) Sat Sat = True
     (==) Sun Sun = True
     (==) _ _ = False
+
+instance Ord DayOfWeek where
+    compare Fri Fri = EQ
+    compare _   Fri = LT
+    compare Fri _   = LT
+    compare _   _   = EQ
 
 instance Eq Date where
     (==) (Date wd md) (Date wd' md') = -- wd : week day; md : month day

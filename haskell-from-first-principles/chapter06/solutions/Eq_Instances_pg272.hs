@@ -3,7 +3,7 @@ module EqInstances where
 -- Write the Eq instance for the datatype provided.
 -- 
 -- 1. It’s not a typo, we’re just being cute with the name.
-data TisAnInteger = TisAn Integer deriving Show
+newtype TisAnInteger = TisAn Integer deriving Show
 
 instance Eq TisAnInteger where
     (==) (TisAn x) (TisAn y) = (==) x y

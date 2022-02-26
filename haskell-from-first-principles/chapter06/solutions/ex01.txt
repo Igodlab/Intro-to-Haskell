@@ -7,6 +7,30 @@ NOTE: To get λ type SHIFT + CTRL + u followed by 03bb.
 # see Eq_Instances_pg272.hs
 #
 
+##################################
+# page 293: Will they work
+# 
+#
+
+Next, take a look at the following code examples and try to decide if they will work, what result they will return if they do, and why or why not (be sure, as always, to test them in your REPL once you have decided on your answer): 
+
+1. 
+λ> max (length [1, 2, 3])
+       (length [8, 9, 10, 11, 12])
+# Ans: 5 (yes it works!)
+
+2. 
+λ> compare (3 * 4) (3 * 5)
+# Ans: LT (it works)
+
+3. 
+λ> compare "Julie" True
+# Ans: error, can't compare [Char] with Bool
+
+4. 
+λ> (5 + 3) > (3 + 6)
+# Ans: False 
+
 
 ##################################
 # page 314: Chapter Exercises
