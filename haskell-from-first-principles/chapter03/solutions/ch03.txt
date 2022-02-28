@@ -35,6 +35,8 @@ area d = pi * (r * r)
 # Ans:
 Yes, now d is in scope
 
+
+
 ##################################
 # page 111: Exercises: Sytax Errors
 # 
@@ -51,6 +53,9 @@ Yes, now d is in scope
 
 3. concat ["<3", " Haskell"]
 # No fix needed
+
+
+
 
 ##################################
 # page 122: Reading Syntax
@@ -84,6 +89,8 @@ b) [2,3,5,6,8,9]  # comes from: e)
 c) "rainbow"      # comes from: b)
 d) [6,12,18]      # comes from: a)
 e) 10             # comes from: c)
+
+
 
 
 ##################################
