@@ -86,7 +86,10 @@ squishAgain = squishMap id
 -- (a -> a -> Ordering) -> [a] -> a
 --
 myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
-myMaximumBy = undefined
+myMaximumBy _ [] = error "nope bish"
+myMaximumBy _ (x:[]) = x
+myMaximumBy f (x1:x2:xs) | f x1 x2 == LT = myMaximumBy f (x2:xs)
+                         | otherwise     = myMaximumBy f (x1:xs)
 
 
 -- Prelude> let xs = [1, 53, 9001, 10]
@@ -99,7 +102,10 @@ myMaximumBy = undefined
 -- 9. myMinimumBy takes a comparison function and a list and returns the least element of the list based on the last value that the comparison returned LT for.
 --
 myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
-myMinimumBy = undefined
+myMinimumBy _ [] = error "nope bish"
+myMinimumBy _ (x:[]) = x
+myMinimumBy f (x1:x2:xs) | f x1 x2 == GT = myMinimumBy f (x2:xs)
+                         | otherwise     = myMinimumBy f (x1:xs)
 
 
 -- Prelude> let xs = [1, 53, 9001, 10]
@@ -113,8 +119,8 @@ myMinimumBy = undefined
 -- 10. Using the myMinimumBy and myMaximumBy functions, write your own versions of maximum and minimum. If you have GHC 7.10 or newer, you’ll see a type constructor that wants a Foldable instance instead of a list as has been the case for many functions so far.
 --
 myMaximum :: (Ord a) => [a] -> a
-myMaximum = undefined
+myMaximum = myMaximumBy compare
 
 
 myMinimum :: (Ord a) => [a] -> a
-myMinimum = undefined
+myMinimum = myMinimumBy compare

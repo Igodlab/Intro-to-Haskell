@@ -217,4 +217,31 @@ c) map sum [[1..5], [1..5], [1..5]]          # Ans: [15,15,15]
 
 
 
+##################################
+# page 517: Chapter Exercises
+#           Data.Char
+# 
+# see: DataChar_pg517.hs
+# 
+
+
+
+
+
+##################################
+# page 519: Chapter Exercises
+#           Ciphers
+# 
+# see: Cipher_pg519.hs
+# 
+
+
+
+##################################
+# page 521: Chapter Exercises
+#           Writing your own standard functions
+#
+# see: OwnFunctions_pg521.hs
+#
+
 
