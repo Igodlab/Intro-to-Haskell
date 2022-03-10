@@ -1,5 +1,7 @@
 # Step by step deconstruction of folds
 
+
+#######################################################################
 # Fold Right: is right associative
 λ> :t foldr 
 foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
@@ -13,7 +15,7 @@ foldr f z (x:xs) = f x (foldr f z xs)
         1 ^ 512
         1
 
-
+#######################################################################
 # Fold Left: is let associative 
 λ> :t foldl 
 foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
@@ -28,8 +30,13 @@ foldl f z (x:xs) = foldl f (f z x) xs
         64
 
 #######################################################################
+## Fold right & Fold left relationship
+
+foldr f z xs = foldl (flip f) z (reverse xs)
 #######################################################################
 
+
+#######################################################################
 # More examples
 ## 2.1) foldr (/) 2 [(-1),2..5]
 --                  ^ = [-1,2,5]

@@ -126,3 +126,28 @@ i) foldl (flip const) 'z' [1..5]
 
 
 
+
+##################################
+# page 566: Exercises
+#           Scans
+# 
+# see: Scans_pg578.hs
+# 
+
+
+
+##################################
+# page 578: Chapter Exercises
+#           Warm-up and review
+# 
+# see: WarmUp_pg578.hs
+# 
+
+
+##################################
+# page 580: Chapter Exercises
+#           Rewriting functions using folds
+# 
+# see: RewritingFunctions_pg580.hs
+# 
+
