@@ -1,0 +1,65 @@
+NOTE: To get λ , type SHIFT + CTRL + u followed by 03bb
+NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
+
+
+
+##################################
+# page 604: Exercises
+#           Dog Types
+# 
+# 
+
+Given the datatypes:
+
+data Doggies a = Husky a | Mastiff a deriving (Eq, Show)
+data DogueDeBordeaux doge = DogueDeBordeaux doge
+
+1. Is Doggies a type constructor or a data constructor?
+# Ans: Type constructor
+
+2. What is the kind of Doggies?
+# Ans: (kind-to-kind)
+       λ> :k Doggies
+       Doggies :: * -> *
+
+3. What is the kind of Doggies String?
+# Ans: (Concrete kind)
+       λ> :k (Doggies String)
+       (Doggies String) :: *
+
+4. What is the type of Husky 10?
+# Ans: (Constrained to Doggies type that have an instance of Num)
+       λ> :t (Husky 10)
+       (Husky 10) :: Num a => Doggies a
+
+5. What is the type of Husky (10 :: Integer)?
+# Ans: (Concrete: Doggies Integer type)
+       λ> :t (Husky (10 :: Integer))
+       (Husky (10 :: Integer)) :: Doggies Integer
+
+6. What is the type of Mastiff "Scooby Doo"?
+# Ans: (concrete Doggies [Char] type)
+       λ> :t (Mastiff "Scooby Doo")
+       (Mastiff "Scooby Doo) :: Doggies [Char]
+
+7. Is DogueDeBordeaux a type constructor or a data constructor?
+# Ans: Could refer to either
+
+8. What is the type of DogueDeBordeaux?
+# Ans: Data constructor DogueDeBordeaux is the same as its type constructor DogueDeBordeaux
+
+9. What is the type of DogueDeBordeaux "doggie!"
+# Ans: (DogueDeBordeaux [Char])
+       λ> :t DogueDeBordeaux "doggie!"
+       (DogueDeBordeaux "doggie!") :: DogueDeBordeaux [Char]
+
+
+##################################
+# page 609: Exercises
+#           Vehicles
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
