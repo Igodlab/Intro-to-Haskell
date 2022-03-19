@@ -63,3 +63,97 @@ data DogueDeBordeaux doge = DogueDeBordeaux doge
 
 
 
+
+
+##################################
+# page 617: Exercises
+#           Cardinality
+# 
+#
+
+While we haven’t explicitly described the rules for calculating the cardinality of datatypes yet, you might already have an idea of how to do it for simple datatypes with nullary constructors. Try not to overthink these exercises — follow your intuition based on what you know.
+
+
+1. data PugType = PugData
+# Ans: Cardinality is zero (nullary)
+
+2. For this one, recall that Bool is also defined with the |:
+
+data Airline =
+      PapuAir
+    | CatapultsR'Us
+    | TakeYourChancesUnited
+
+# Ans: Cardinality is 3
+
+3. Given what we know about Int8, what’s the cardinality of Int16?
+# Ans: Cardinality is 2^16=65536
+
+4. Use the REPL and maxBound and minBound to examine Int and Integer. What can you say about the cardinality of those types? 
+# Ans: λ> maxBound :: Int
+#      9223372036854775807
+#
+#      λ> minBound :: Int
+#      -9223372036854775808
+#
+#      whereas there is no instance for Bounded Integer, as it can represent as infinetly large numbers
+
+        
+
+5. Extra credit (impress your friends!): What’s the connection between the 8 in Int8 and that type’s cardinality of 256?
+# Ans: Int8 type can represent 2^8 = 256 values 
+
+
+
+##################################
+# page 618: Exercises
+#           For Example
+# 
+#
+
+Given:
+
+data Example = MakeExample deriving Show
+
+1. You can query the type of a value in GHCi with the :type command, also abbreviated :t.
+Example:
+
+Prelude> :t False
+False :: Bool
+
+What is the type of data constructor MakeExample? What happens when you request the type of Example? 
+# Ans: Example
+       
+       λ> :t Example
+       error: Data constructor not in scope: Example
+
+2. What if you try :info on Example in GHCi? Can you determine what typeclass instances are defined for the Example type using :info in GHCi?
+# Ans: We'll get info about its definition and instances
+      
+       λ> :i Example
+       data Example = MakeExample
+
+       instance [safe] Show Example 
+       
+
+3. Try making a new datatype like Example but with a single type argument added to MakeExample, such as Int. What has changed when you query MakeExample with :type in GHCi?
+# Ans: λ> data ExampleX = MakeExampleX Int deriving Show
+       
+       λ> :t MakeExampleX
+       MakeExampleX :: Int -> ExampleX
+
+       MakeExampleX has the type signature similar to a function that takes a type (Int) instead of values and returns a type ExampleX
+
+
+
+
+
+##################################
+# page 609: Exercises
+#           Logic Goats
+# 
+# see: LogicGoats_pg626.hs 
+#
+
+
+
