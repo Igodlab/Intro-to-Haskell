@@ -149,11 +149,43 @@ What is the type of data constructor MakeExample? What happens when you request 
 
 
 ##################################
-# page 609: Exercises
+# page 626: Exercises
 #           Logic Goats
 # 
 # see: LogicGoats_pg626.hs 
 #
+
+
+
+
+##################################
+# page 629: Exercises
+#           Pity the Bool
+# 
+# see: PityTheBool_pg629.hs 
+#
+
+
+
+##################################
+# page 641: Exercises
+#           How Does Your Garden Grow?
+# 
+# see: GardenGrow_pg641.hs 
+#
+
+
+
+
+
+##################################
+# page 641: Exercises
+#           Programmers
+# 
+# see: Programmers_pg657.hs 
+#
+
+
 
 
 

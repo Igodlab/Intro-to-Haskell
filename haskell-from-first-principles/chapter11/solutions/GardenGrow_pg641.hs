@@ -22,3 +22,4 @@ data Garden = Garden Gardener FlowerType deriving Show
 --        Gardener has the same cardinality as String = 1114112,
 --        FlowerType has cardinality of 4 and thus
 --        Garden has cardinality = 1114112 x 4 = 4456448
+--        
