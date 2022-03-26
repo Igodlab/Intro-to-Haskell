@@ -45,8 +45,17 @@ allValuesProgrammer = [Programmer { os = os_i, lang = lang_i} | os_i <- allOS
     allLangs = [minBound :: ProgLang .. maxBound :: ProgLang]
 
 
+-- example for normal-form vs not-normal-form
 type Intis = Int
 
 data BestMetal = Opeth | Tool | PorcupineTree deriving (Show)
 
+-- not-normal-form
 data IntisMetal = IntisMetal Intis BestMetal deriving Show
+
+-- normal-form
+data MetalFrom = Opeth' Intis
+               | Tool' Intis
+               | PorcupineTree' Intis
+               deriving Show
+

@@ -188,4 +188,14 @@ What is the type of data constructor MakeExample? What happens when you request 
 
 
 
+##################################
+# page 673: Exercises
+#           The Quad
+# 
+# see: TheQuad_pg673.hs 
+#
+
+
+
+
 
