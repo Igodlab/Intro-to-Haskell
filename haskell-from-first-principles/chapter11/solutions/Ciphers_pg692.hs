@@ -14,23 +14,22 @@ import qualified Data.Char as DC
 
 caesarEncode :: Int -> Char -> Char
 caesarEncode 0 x = x
-caesarEncode n x | x == 'a' && n == (-1) = caesarEncode (n + pm) 'z'
-                 | x == 'A' && n == (-1) = caesarEncode (n + pm) 'Z'
-                 | x == 'z' && n == 1    = caesarEncode (n + pm) 'a'
-                 | x == 'Z' && n == 1    = caesarEncode (n + pm) 'A'
+caesarEncode n x | x == 'a' && pm == 1    = caesarEncode (n + pm) 'z'
+                 | x == 'z' && pm == (-1) = caesarEncode (n + pm) 'a'
+                 | x == 'A' && pm == 1    = caesarEncode (n + pm) 'Z'
+                 | x == 'Z' && pm == (-1) = caesarEncode (n + pm) 'A'
                  | otherwise              = caesarEncode (n + pm) (shft x)
-                where
-                  (pm, shft) = if n < 0 then (1, pred) else (-1, succ)
+  where
+    (pm, shft) = if n < 0 then (1, pred) else (-1, succ)
 
 vignereEncode :: String -> String -> String
 vignereEncode [] xs = xs
-vignereEncode (k:ks) (x:xs)
-    | x == ' '  = caesarEncode 0 x : vignereEncode (k:ks) xs
-    | k == ' '  = caesarEncode 0 x : vignereEncode ks xs
-    | otherwise = caesarEncode (decodeKey $ DC.toLower k) x : vignereEncode ks xs
+vignereEncode _  [] = []
+vignereEncode kk@(k:ks) (x:xs) 
+    | x == ' '                       = x : vignereEncode kk xs
+    | elem (DC.toLower k) ['a'..'z'] = caesarEncode (decodeKey' $ DC.toLower k) x : vignereEncode (ks ++ [k]) xs
+    | otherwise                      = x : vignereEncode (ks ++ [k]) xs
   where
-    decodeKey :: Char -> Int
-    decodeKey c = foldr (\x acc -> if x == c then acc else acc + 1) 0 ['a'..c]
-  
-decodeKey :: Char -> Int
-decodeKey c = foldr (\x acc -> if x == c then acc else acc + 1) 0 ['a'..c]
+    decodeKey' :: Char -> Int
+    decodeKey' c = foldr (\x acc -> if x == c then acc else acc + 1) 0 ['a'..c]
+      
