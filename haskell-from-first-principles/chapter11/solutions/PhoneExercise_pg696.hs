@@ -13,7 +13,7 @@ module PhoneExercise where
 --
 --     ---------------------------
 --     | 1      | 2 ABC | 3 DEF  |
---     |=========================|
+--     |--------|-------|--------|
 --     | 4 GHI  | 5 JKL | 6 MNO  | 
 --     |--------|-------|--------|
 --     | 7 PQRS | 8 TUV | 9 WXYZ |
@@ -36,7 +36,10 @@ module PhoneExercise where
 -- 1. Create a data structure that captures the phone layout above. The data structure should be able to express enough of how the layout works that you can use it to dictate the behavior of the functions in the following exercises. 
 --
 -- -- fill in the rest.
-data DaPhone = DaPhone
+data DaPhone = DaPhone { _rowId  :: Int
+                       , _colId  :: Int
+                       , _nPress :: Int
+                       } deriving (Show, Read)
 
 
 -- 2. Convert the following conversations into the keypresses required to express them. We’re going to suggest types and functions to fill in order to accomplish the goal, but they’re not obligatory. If you want to do it diﬀerently, go right ahead.
@@ -53,15 +56,33 @@ convo = [ "Wanna play 20 questions"
         , "Just making sure rofl ur turn"
         ]
 
-
 -- validButtons = "1234567890*#"
 type Digit = Char
 
 -- Valid presses: 1 and up
 type Presses = Int
 
+-- keyboard logic
+keyboard :: Char -> DaPhone 
+keyboard c | f c "1"     /= (-1) = DaPhone {_rowId = 0, _colId = 0, _nPress = f c "1"    }
+           | f c "ABC2"  /= (-1) = DaPhone {_rowId = 0, _colId = 1, _nPress = f c "ABC2" }
+           | f c "DEF3"  /= (-1) = DaPhone {_rowId = 0, _colId = 2, _nPress = f c "DEF3" }
+           | f c "GHI4"  /= (-1) = DaPhone {_rowId = 1, _colId = 0, _nPress = f c "GHI4" }
+           | f c "JKL5"  /= (-1) = DaPhone {_rowId = 1, _colId = 1, _nPress = f c "JKL5" }
+           | f c "MNO6"  /= (-1) = DaPhone {_rowId = 1, _colId = 2, _nPress = f c "MNO6" }
+           | f c "PQRS7" /= (-1) = DaPhone {_rowId = 2, _colId = 0, _nPress = f c "PQRS7"}
+           | f c "TUV8"  /= (-1) = DaPhone {_rowId = 2, _colId = 1, _nPress = f c "TUV8" }
+           | f c "WXYZ9" /= (-1) = DaPhone {_rowId = 2, _colId = 2, _nPress = f c "WXYZ9"}
+           | f c "*^"    /= (-1) = DaPhone {_rowId = 3, _colId = 0, _nPress = f c "*^"   }
+           | f c "+_0"   /= (-1) = DaPhone {_rowId = 3, _colId = 1, _nPress = f c "+_0"  }
+           | f c "#.,"   /= (-1) = DaPhone {_rowId = 3, _colId = 2, _nPress = f c "#.,"  }
+         where                                                             
+           f x st = foldl (\acc z -> if (elem x st && z == x) then acc + 1 else acc) (-1) st
+            
+
+
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTaps = undefined
+reverseTaps ph c = undefined
 
 -- assuming the default phone definition
 -- 'a' -> [('2', 1)]
