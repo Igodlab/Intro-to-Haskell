@@ -99,15 +99,31 @@ fingerTaps :: [(Digit, Presses)] -> Presses
 fingerTaps = foldl (\acc (_, x) -> acc + x) 0 
 
 
-
 -- 4. What was the most popular letter for each message? What was its cost? You’ll want to combine reverseTaps and fingerTaps to figure out what it cost in taps. reverseTaps is a list because you need to press a diﬀerent button in order to get capitals.
 mostPopularLetter :: String -> Char
-mostPopularLetter xs = foldr (\x acc -> if compare x acc == GT then x else acc) 0 $ msgEncode xs
+mostPopularLetter = fst . mostFrequentChar . uniqueChar
+  where
+    uniqueChar :: String -> [(Char, Int)]
+    uniqueChar [] = []
+    uniqueChar xt@(x:xs) = (x, length $ filter (== x) xt) : uniqueChar [i | i <- xs, i /= x, isAlpha i] 
 
+    mostFrequentChar :: [(Char, Int)] -> (Char, Int)
+    mostFrequentChar = foldr (\(z1, z2) (a1, a2) -> if z2 >= a2 then (z1, z2) else (a1, a2)) ('\n', 0) 
 
 -- 5. What was the most popular letter overall? What was the most popular word?
 coolestLtr :: [String] -> Char
-coolestLtr = undefined
+coolestLtr = mostPopularLetter . concatMap (++ ['\n'])
+
 
 coolestWord :: [String] -> String
-coolestWord = undefined
+coolestWord = fst . mostFrequentWord . uniqueWord . flattenWords
+  where
+    flattenWords = words . concatMap (++ ['\n'])
+
+    uniqueWord :: [String] -> [(String, Int)]
+    uniqueWord [] = []
+    uniqueWord xt@(x:xs) = (x, length $ filter (== x) xt) : uniqueWord [i | i <- xs, i /= x] 
+
+    mostFrequentWord :: [(String, Int)] -> (String, Int)
+    mostFrequentWord = foldr (\(z1, z2) (a1, a2) -> if z2 >= a2 then (z1, z2) else (a1, a2)) ("", 0)
+
