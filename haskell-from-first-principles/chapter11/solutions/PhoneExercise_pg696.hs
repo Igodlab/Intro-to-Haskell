@@ -80,7 +80,7 @@ reverseTaps ph c | isUpper c = ('*', 1) : [countPresses c ph]
   where
     countPresses :: Digit -> DaPhone -> (Digit, Presses)
     countPresses d (DaPhone (x:xs)) 
-        | dUp `elem` xDig = (xId, ((length $ takeWhile (/= dUp) xDig) :: Presses) + 1)
+        | dUp `elem` xDig = (xId, (length $ takeWhile (/= dUp) xDig) + 1)
         | otherwise = countPresses d (DaPhone xs)
       where
         dUp = toUpper d
