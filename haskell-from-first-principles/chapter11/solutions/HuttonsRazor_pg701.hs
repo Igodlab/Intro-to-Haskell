@@ -9,21 +9,27 @@ module HuttonsRazor where
 --
 -- 1. Your first task is to write the “eval” function which reduces an expression to a final sum.
 --
-data Expr = Lit Integer | Add Expr Expr 
+data Expr = Lit Integer | Add Expr Expr deriving Show
 
 eval :: Expr -> Integer
-eval = error "do it to it"
+eval exp = case exp of
+            (Lit e)     -> e
+            (Add e1 e2) -> (eval e1) + (eval e2)
 
 
--- Example of expected output:
+-- Examples of expected outputs:
 -- Prelude> eval (Add (Lit 1) (Lit 9001))
 -- 9002
-
+--
+-- Prelude> eval Add (Lit 3) (Add (Add (Lit 10) (Lit 3)) (Lit 10))
+-- 26
 
 
 -- 2. Write a printer for the expressions. 
 printExpr :: Expr -> String
-printExpr = undefined
+printExpr exp = case exp of
+                    (Lit e)     -> show e
+                    (Add e1 e2) -> printExpr e1 ++ " + " ++ printExpr e2
 
 -- Prelude> printExpr (Add (Lit 1) (Lit 9001))
 -- "1 + 9001"
