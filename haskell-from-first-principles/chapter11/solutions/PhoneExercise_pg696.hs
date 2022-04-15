@@ -1,5 +1,7 @@
 module PhoneExercise where
 
+import Data.Char
+
 -- This exercise by geophf [8] originally for 1HaskellADay [9] Thank you for letting us use this exercise!
 --
 -- references 
@@ -12,7 +14,7 @@ module PhoneExercise where
 --
 --
 --     ---------------------------
---     | 1      | 2 ABC | 3 DEF  |
+--     | 1&'(   | 2 ABC | 3 DEF  |
 --     |--------|-------|--------|
 --     | 4 GHI  | 5 JKL | 6 MNO  | 
 --     |--------|-------|--------|
@@ -24,11 +26,11 @@ module PhoneExercise where
 --
 -- Where star (*) gives you capitalization of the letter you’re writing to your friends, and 0 is your space bar. To represent the digit itself, you press that digit once more than the letters it represents. If you press a button one more than is required to type the digit, it wraps around to the first letter. For example, 
 --
--- 2 -> 'A' 
--- 22 -> 'B'
--- 222 -> 'C'
--- 2222 -> '2'
--- 22222 -> 'A'
+-- 2 -> '2' 
+-- 22 -> 'A'
+-- 222 -> 'B'
+-- 2222 -> 'C'
+-- 22222 -> '2'
 --
 -- So on and so forth. We’re going to kick this around. 
 --
@@ -36,13 +38,18 @@ module PhoneExercise where
 -- 1. Create a data structure that captures the phone layout above. The data structure should be able to express enough of how the layout works that you can use it to dictate the behavior of the functions in the following exercises. 
 --
 -- -- fill in the rest.
-data DaPhone = DaPhone { _rowId  :: Int
-                       , _colId  :: Int
-                       , _nPress :: Int
-                       } deriving (Show, Read)
+--
+-- DaPhone [(Digit, String)] 
+--           |      |
+--           |      |> this represents the characters that can be accessed in button `Digit`
+--           |
+--           |> represents the id of the button
+--
+newtype DaPhone = DaPhone [(Digit, String)] deriving (Show, Read)
 
+myPhone = DaPhone $ zip (('1' :: Digit) : "23456789*0#") ["1", "2ABC", "3DEF", "4GHI", "5JKL", "6MNO", "7PQRS", "8TUV", "9WXYZ", "*^", "0+ ", "#.,"]
 
--- 2. Convert the following conversations into the keypresses required to express them. We’re going to suggest types and functions to fill in order to accomplish the goal, but they’re not obligatory. If you want to do it diﬀerently, go right ahead.
+-- 2. Convert the following conversations into the keypresses required to express them. We’re going to suggest types and functions to fill in order to accomplish the goal, but they’re not obligatory. If you want to do it differently, go right ahead.
 --
 convo :: [String]
 convo = [ "Wanna play 20 questions"
@@ -59,37 +66,29 @@ convo = [ "Wanna play 20 questions"
 -- validButtons = "1234567890*#"
 type Digit = Char
 
--- Valid presses: 1 and up
+--d a0 Valid presses: 1 and up
 type Presses = Int
 
 -- keyboard logic
-keyboard :: Char -> DaPhone 
-keyboard c | f c "1"     /= (-1) = DaPhone {_rowId = 0, _colId = 0, _nPress = f c "1"    }
-           | f c "ABC2"  /= (-1) = DaPhone {_rowId = 0, _colId = 1, _nPress = f c "ABC2" }
-           | f c "DEF3"  /= (-1) = DaPhone {_rowId = 0, _colId = 2, _nPress = f c "DEF3" }
-           | f c "GHI4"  /= (-1) = DaPhone {_rowId = 1, _colId = 0, _nPress = f c "GHI4" }
-           | f c "JKL5"  /= (-1) = DaPhone {_rowId = 1, _colId = 1, _nPress = f c "JKL5" }
-           | f c "MNO6"  /= (-1) = DaPhone {_rowId = 1, _colId = 2, _nPress = f c "MNO6" }
-           | f c "PQRS7" /= (-1) = DaPhone {_rowId = 2, _colId = 0, _nPress = f c "PQRS7"}
-           | f c "TUV8"  /= (-1) = DaPhone {_rowId = 2, _colId = 1, _nPress = f c "TUV8" }
-           | f c "WXYZ9" /= (-1) = DaPhone {_rowId = 2, _colId = 2, _nPress = f c "WXYZ9"}
-           | f c "*^"    /= (-1) = DaPhone {_rowId = 3, _colId = 0, _nPress = f c "*^"   }
-           | f c "+_0"   /= (-1) = DaPhone {_rowId = 3, _colId = 1, _nPress = f c "+_0"  }
-           | f c "#.,"   /= (-1) = DaPhone {_rowId = 3, _colId = 2, _nPress = f c "#.,"  }
-         where                                                             
-           f x st = foldl (\acc z -> if (elem x st && z == x) then acc + 1 else acc) (-1) st
-            
+
 
 
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTaps ph c = undefined
+reverseTaps ph c | isUpper c = ('*', 1) : [countPresses c ph]
+                 | otherwise = [countPresses c ph]
+  where
+    countPresses :: Digit -> DaPhone -> (Digit, Presses)
+    countPresses d (DaPhone (x:xs)) | dUp `elem` xDig = (xId, ((length $ takeWhile (/= dUp) xDig) :: Presses) + 1)
+                                    | otherwise = countPresses d (DaPhone xs)
+      where
+        dUp = toUpper d
+        (xId, xDig) = x
 
--- assuming the default phone definition
--- 'a' -> [('2', 1)]
--- 'A' -> [('*', 1), ('2', 1)]
+                                        
 
 cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
-cellPhonesDead = undefined
+cellPhonesDead _ [] = []
+cellPhonesDead ph (x:xs) = reverseTaps ph x ++ cellPhonesDead ph xs
 
 
 
