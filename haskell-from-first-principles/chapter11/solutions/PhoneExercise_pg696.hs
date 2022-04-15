@@ -1,3 +1,5 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
 module PhoneExercise where
 
 import Data.Char
@@ -55,7 +57,7 @@ newtype DaPhone = DaPhone [(Digit, String)] deriving (Show, Read)
 --           |> represents the id of the button
 --
 
-myPhone = DaPhone $ zip (('1' :: Digit) : "23456789*0#") ["1", "2ABC", "3DEF", "4GHI", "5JKL", "6MNO", "7PQRS", "8TUV", "9WXYZ", "*^", "0+ ", "#.,"]
+myPhone = DaPhone $ zip "123456789*0#" ["1", "2ABC", "3DEF", "4GHI", "5JKL", "6MNO", "7PQRS", "8TUV", "9WXYZ", "*^", "0+ ", "#.,"]
 
 -- 2. Convert the following conversations into the keypresses required to express them. We’re going to suggest types and functions to fill in order to accomplish the goal, but they’re not obligatory. If you want to do it differently, go right ahead.
 --
