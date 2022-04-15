@@ -21,7 +21,7 @@ eval exp = case exp of
 -- Prelude> eval (Add (Lit 1) (Lit 9001))
 -- 9002
 --
--- Prelude> eval Add (Lit 3) (Add (Add (Lit 10) (Lit 3)) (Lit 10))
+-- Prelude> eval $ Add (Lit 3) (Add (Add (Lit 10) (Lit 3)) (Lit 10))
 -- 26
 
 
