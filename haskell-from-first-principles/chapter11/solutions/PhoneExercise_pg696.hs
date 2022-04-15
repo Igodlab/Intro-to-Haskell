@@ -38,6 +38,15 @@ import Data.Char
 -- 1. Create a data structure that captures the phone layout above. The data structure should be able to express enough of how the layout works that you can use it to dictate the behavior of the functions in the following exercises. 
 --
 -- -- fill in the rest.
+
+-- validButtons = "1234567890*#"
+type Digit = Char
+
+--d a0 Valid presses: 1 and up
+type Presses = Int
+
+
+newtype DaPhone = DaPhone [(Digit, String)] deriving (Show, Read)
 --
 -- DaPhone [(Digit, String)] 
 --           |      |
@@ -45,7 +54,6 @@ import Data.Char
 --           |
 --           |> represents the id of the button
 --
-newtype DaPhone = DaPhone [(Digit, String)] deriving (Show, Read)
 
 myPhone = DaPhone $ zip (('1' :: Digit) : "23456789*0#") ["1", "2ABC", "3DEF", "4GHI", "5JKL", "6MNO", "7PQRS", "8TUV", "9WXYZ", "*^", "0+ ", "#.,"]
 
@@ -63,23 +71,15 @@ convo = [ "Wanna play 20 questions"
         , "Just making sure rofl ur turn"
         ]
 
--- validButtons = "1234567890*#"
-type Digit = Char
-
---d a0 Valid presses: 1 and up
-type Presses = Int
-
--- keyboard logic
-
-
 
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTaps ph c | isUpper c = ('*', 1) : [countPresses c ph]
                  | otherwise = [countPresses c ph]
   where
     countPresses :: Digit -> DaPhone -> (Digit, Presses)
-    countPresses d (DaPhone (x:xs)) | dUp `elem` xDig = (xId, ((length $ takeWhile (/= dUp) xDig) :: Presses) + 1)
-                                    | otherwise = countPresses d (DaPhone xs)
+    countPresses d (DaPhone (x:xs)) 
+        | dUp `elem` xDig = (xId, ((length $ takeWhile (/= dUp) xDig) :: Presses) + 1)
+        | otherwise = countPresses d (DaPhone xs)
       where
         dUp = toUpper d
         (xId, xDig) = x
@@ -90,17 +90,19 @@ cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
 cellPhonesDead _ [] = []
 cellPhonesDead ph (x:xs) = reverseTaps ph x ++ cellPhonesDead ph xs
 
-
+-- reverse a whole conversation eg. convo
+reverseConversation :: DaPhone -> [String] -> [[(Digit, Presses)]]
+reverseConversation ph = map (cellPhonesDead ph)
 
 -- 3. How many times do digits need to be pressed for each message?
 fingerTaps :: [(Digit, Presses)] -> Presses
-fingerTaps = undefined
+fingerTaps = foldl (\acc (_, x) -> acc + x) 0 
 
 
 
 -- 4. What was the most popular letter for each message? What was its cost? You’ll want to combine reverseTaps and fingerTaps to figure out what it cost in taps. reverseTaps is a list because you need to press a diﬀerent button in order to get capitals.
 mostPopularLetter :: String -> Char
-mostPopularLetter = undefined
+mostPopularLetter xs = foldr (\x acc -> if compare x acc == GT then x else acc) 0 $ msgEncode xs
 
 
 -- 5. What was the most popular letter overall? What was the most popular word?
