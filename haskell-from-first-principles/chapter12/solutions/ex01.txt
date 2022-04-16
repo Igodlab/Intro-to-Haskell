@@ -1,0 +1,108 @@
+NOTE: To get λ , type SHIFT + CTRL + u followed by 03bb
+NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
+
+
+
+##################################
+# page 732: Chapter Exercises
+#           Determine the Kinds
+# 
+# 
+
+
+
+##################################
+# page 733: Chapter Exercises
+#           String Processing
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+
+##################################
+# page 735: Chapter Exercises
+#           Validate the Word
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+##################################
+# page 736: Chapter Exercises
+#           It's Only Natural
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+##################################
+# page 738: Chapter Exercises
+#           Small Library for Maybe
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+
+##################################
+# page 740: Chapter Exercises
+#           Small Library for Either
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+
+##################################
+# page 742: Chapter Exercises
+#           Unfolds
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+
+##################################
+# page 743: Chapter Exercises
+#           Why Bother?
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+
+##################################
+# page 744: Chapter Exercises
+#           Write Your Own Iterate and Unfoldr
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
+
+
+##################################
+# page 746: Chapter Exercises
+#           Finally Something Other than a List
+# 
+# see: Vehicles_pg609.hs 
+#
+
+
+
