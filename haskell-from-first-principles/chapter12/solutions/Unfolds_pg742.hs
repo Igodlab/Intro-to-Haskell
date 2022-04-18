@@ -10,7 +10,7 @@ myIterate f x = x : myIterate f (f x)
 myUnfoldr :: (b -> Maybe (a, b)) -> b -> [a]
 myUnfoldr f x = case f x of
                 Nothing -> []
-                (Just (l, r)) -> l : myUnfoldr f r
+                (Just (prev, next)) -> prev : myUnfoldr f next
 
 -- 3. Rewrite myIterate into betterIterate using myUnfoldr. A hint — we used unfoldr to produce the same results as iterate earlier. Do this with diﬀerent functions and see if you can abstract the structure out.
 -- 
