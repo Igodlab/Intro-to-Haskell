@@ -9,13 +9,26 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # 
 # 
 
+1. What is the kind of a? Given:
+
+id :: a -> a
+# Ans: kind of a is *
+
+2. What is the kind of a & f? Given:
+
+r :: a -> f a
+# Ans: kind of a is *
+       kind of f is * -> *
+
+
+
 
 
 ##################################
 # page 733: Chapter Exercises
 #           String Processing
 # 
-# see: Vehicles_pg609.hs 
+# see: StringPrecessing_pg733.hs 
 #
 
 
@@ -26,7 +39,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 735: Chapter Exercises
 #           Validate the Word
 # 
-# see: Vehicles_pg609.hs 
+# see: ValidateWord_pg735.hs 
 #
 
 
@@ -36,7 +49,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 736: Chapter Exercises
 #           It's Only Natural
 # 
-# see: Vehicles_pg609.hs 
+# see: OnlyNatural_pg736.hs 
 #
 
 
@@ -46,7 +59,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 738: Chapter Exercises
 #           Small Library for Maybe
 # 
-# see: Vehicles_pg609.hs 
+# see: MaybeLibrary_pg738.hs
 #
 
 
@@ -57,7 +70,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 740: Chapter Exercises
 #           Small Library for Either
 # 
-# see: Vehicles_pg609.hs 
+# see: EitherLibrary_pg740.hs 
 #
 
 
@@ -68,31 +81,8 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 742: Chapter Exercises
 #           Unfolds
 # 
-# see: Vehicles_pg609.hs 
+# see: Unfolds_pg742.hs 
 #
-
-
-
-
-
-##################################
-# page 743: Chapter Exercises
-#           Why Bother?
-# 
-# see: Vehicles_pg609.hs 
-#
-
-
-
-
-
-##################################
-# page 744: Chapter Exercises
-#           Write Your Own Iterate and Unfoldr
-# 
-# see: Vehicles_pg609.hs 
-#
-
 
 
 
@@ -101,7 +91,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 746: Chapter Exercises
 #           Finally Something Other than a List
 # 
-# see: Vehicles_pg609.hs 
+# see: OtherThanList_pg746.hs 
 #
 
 

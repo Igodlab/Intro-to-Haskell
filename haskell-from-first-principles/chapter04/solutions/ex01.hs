@@ -77,4 +77,7 @@ functionF xs = (x) w 1
 -- 
 -- \X = x
 --
+idX :: a -> a
+idX x = x
+
 

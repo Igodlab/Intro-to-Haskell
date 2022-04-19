@@ -23,3 +23,12 @@ sumNumberish :: Numberish a => a -> a -> a
 sumNumberish x x' = fromNumber summed
   where
     summed = (toNumber x) + (toNumber x')
+
+type Subject = String
+type Verb = String
+type Object = String
+data Sentence = Sentence Subject Verb Object deriving (Eq, Show)
+s1 = Sentence "dogs" "drool"
+s2 = Sentence "Julie" "loves" "dogs"
+
+
