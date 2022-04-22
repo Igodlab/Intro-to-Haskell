@@ -1,0 +1,13 @@
+NOTE: To get λ , type SHIFT + CTRL + u followed by 03bb
+NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
+
+
+
+##################################
+# page 913: Exercise
+#           Optional Monoid
+# 
+# see: OptionalMonoid_pg913.hs
+# 
+
+
