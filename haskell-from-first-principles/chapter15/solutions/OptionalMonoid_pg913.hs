@@ -1,15 +1,18 @@
 module OptionalMonoid where
 
-import qualified Data.Monoid as DM
+import Data.Monoid 
 
 data Optional a = Nada | Only a deriving (Eq, Show)
 
-instance (Semigroup a, Monoid a) => Monoid (Optional a) where
+instance Monoid a => Monoid (Optional a) where
     mempty = Nada
 
-    mappend Nada (Only x) = Only (x)
-    mappend (Only x) Nada = Only (x)
-    mappend (Only x) (Only y) = Only (x <> y)
+-- Defining mappend is unnecessary, it copies from Semigroup [https://wiki.haskell.org/Monoid]
+instance Monoid a => Semigroup (Optional a) where
+    (Only x) <> (Only y) = Only $ x <> y
+    _ <> (Only x) = Only (x)
+    (Only x) <> _ = Only (x)
+    _ <> _ = Nada
 
 -- Expected output:
 --
