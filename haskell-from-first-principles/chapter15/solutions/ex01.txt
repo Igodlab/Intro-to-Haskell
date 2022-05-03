@@ -16,7 +16,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 934: Exercise
 #           Maybe Another Monoid
 # 
-# see: AnotherMonoid_pg934.hs
+# see: MaybeAnotherMonoid_pg934.hs
 # 
 
 

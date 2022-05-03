@@ -5,7 +5,7 @@ See pg. 919
 Starts with a quick compilation and built of Monoidal instances for ListyInstances.hs into the `*.o` and `*.hi` files. This is accomplished with 
 
 ```shell
-$ ghc I. --make ListyInstances.hs
+$ ghc I. --make Listy.hs
 ```
 
 and is a quick alternative to Cabal & Stack for compilation of a single module.
