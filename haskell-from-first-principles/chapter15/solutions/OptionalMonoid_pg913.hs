@@ -1,5 +1,5 @@
 module OptionalMonoid_pg913
-    ( Optional (..)) where
+    ( Optional) where
 
 import Data.Monoid 
 
