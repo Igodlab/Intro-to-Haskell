@@ -1,5 +1,4 @@
-module OptionalMonoid_pg913
-    ( Optional) where
+module OptionalMonoid_pg913 where
 
 import Data.Monoid 
 
@@ -9,7 +8,7 @@ instance Monoid a => Monoid (Optional a) where
     mempty = Nada
 
 -- Defining mappend is unnecessary, it copies from Semigroup [https://wiki.haskell.org/Monoid]
-instance Monoid a => Semigroup (Optional a) where
+instance Semigroup a => Semigroup (Optional a) where
     (Only x) <> (Only y) = Only $ x <> y
     _ <> (Only x) = Only x
     (Only x) <> _ = Only x
