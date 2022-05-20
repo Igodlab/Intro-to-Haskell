@@ -10,8 +10,8 @@ instance Monoid a => Monoid (Optional a) where
 -- Defining mappend is unnecessary, it copies from Semigroup [https://wiki.haskell.org/Monoid]
 instance Semigroup a => Semigroup (Optional a) where
     (Only x) <> (Only y) = Only $ x <> y
-    _ <> (Only x) = Only x
-    (Only x) <> _ = Only x
+    _ <> x = x
+    x <> _ = x
     _ <> _ = Nada
 
 -- Expected output:
