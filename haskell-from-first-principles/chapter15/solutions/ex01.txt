@@ -7,7 +7,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 913: Exercise
 #           Optional Monoid
 # 
-# see: OptionalMonoid_pg913.hs
+# see: OptionalMonoid.hs
 # 
 
 
@@ -16,12 +16,26 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # page 934: Exercise
 #           Maybe Another Monoid
 # 
-# see: MaybeAnotherMonoid_pg934.hs
+# see: MaybeAnotherMonoid.hs
 # 
 
 Like other scripts that import datatypes and instances from another file, we need to compile it locally. Go to the directory where `MaybeAnotherMonoid_pg934.hs` is and then 
 
 ```
-$ ghc -I. --make MaybeAnotherMonoid_pg934.hs
+$ ghc -I. --make MaybeAnotherMonoid.hs
 ```
+
+
+##################################
+# page 944: Chapter Exercises
+#           Semigroup exercises
+# 
+# see: SemigroupExercises.hs
+# 
+
+Given a datatype, implement the Semigroup instance. Add Semigroup constraints to type variables where needed. Use the Semigroup class from the semigroups library (or from base if you are on GHC 8) or write your own. When we use (<>), we mean the infix mappend from the Semigroup typeclass. 
+
+Note We’re not always going to derive every instance you may want or need in the datatypes we provide for exercises. We expect you to know what you need and to take care of it yourself by this point.
+
+
 
