@@ -25,9 +25,6 @@ instance Arbitrary a => Arbitrary (First' a) where
         elm <- elements [OM.Nada, OM.Only h]
         return $ First' elm
 
-foo :: First' a -> OM.Optional a
-foo (First' x) = x
-
 
 firstMappend :: (Semigroup a) => First' a -> First' a -> First' a
 firstMappend = (<>) 
