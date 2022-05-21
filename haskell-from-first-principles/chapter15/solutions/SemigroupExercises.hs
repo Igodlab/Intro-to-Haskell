@@ -15,6 +15,7 @@ type TrivAssoc = Trivial -> Trivial -> Trivial -> Bool
 
 
 -- prob 2
+--
 newtype Identity a = Identity a deriving (Eq, Show)
 
 instance Semigroup a => Semigroup (Identity a) where
@@ -22,12 +23,12 @@ instance Semigroup a => Semigroup (Identity a) where
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do 
-        h <- arbitrary
-        return $ Identity h
+        Identity <$> arbitrary
 
 type IdentityAssoc = Identity (Sum Int) -> Identity (Sum Int) -> Identity (Sum Int) -> Bool
 
 -- prob 3 
+--
 data Two a b = Two a b deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
@@ -36,8 +37,7 @@ instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
     arbitrary = do
         ha <- arbitrary
-        hb <- arbitrary
-        return $ Two ha hb
+        Two ha <$> arbitrary
 
 type TwoAssoc = Two (Product Int) (Product Int) 
              -> Two (Product Int) (Product Int)
@@ -46,6 +46,7 @@ type TwoAssoc = Two (Product Int) (Product Int)
 
 
 -- prob 4
+--
 data Three a b c = Three a b c deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) where
@@ -64,8 +65,31 @@ type ThreeAssoc = Three (Product Int) (Product Int) (Product Int)
 
 
 -- prob 5. 
+--
 data Four a b c d = Four a b c d deriving (Eq, Show)
 
+instance ( Semigroup a, 
+           Semigroup b,
+           Semigroup c,
+           Semigroup d)
+           => Semigroup (Four a b c d) where
+    Four w1 x1 y1 z1 <> Four w2 x2 y2 z2 = Four (w1 <> w2) (x1 <> x2) (y1 <> y2) (z1 <> z2)
+
+instance ( Arbitrary a,
+           Arbitrary b,
+           Arbitrary c,
+           Arbitrary d)
+           => Arbitrary (Four a b c d) where
+    arbitrary = do 
+        ha <- arbitrary
+        hb <- arbitrary
+        hc <- arbitrary
+        Four ha hb hc <$> arbitrary
+    
+type FourAssoc = Four (Product Int) (Product Int) (Product Int) (Product Int)
+              -> Four (Product Int) (Product Int) (Product Int) (Product Int)
+              -> Four (Product Int) (Product Int) (Product Int) (Product Int)
+              -> Bool
 
 
 -- prob 6. 
@@ -75,10 +99,18 @@ data Four a b c d = Four a b c d deriving (Eq, Show)
 -- BoolConj True
 -- Prelude> (BoolConj True) <> (BoolConj False)
 -- BoolConj False
-
+-- 
 newtype BoolConj = BoolConj Bool deriving (Eq, Show)
 
+instance Semigroup BoolConj where
+    BoolConj True <> BoolConj True = BoolConj True
+    BoolConj _    <> BoolConj _    = BoolConj False
 
+instance Arbitrary BoolConj where
+    arbitrary = do
+        BoolConj <$> arbitrary
+
+type BoolConjAssoc = BoolConj -> BoolConj -> BoolConj -> Bool
 
 -- prob 7. 
 -- 
@@ -87,8 +119,18 @@ newtype BoolConj = BoolConj Bool deriving (Eq, Show)
 -- BoolDisj True
 -- Prelude> (BoolDisj True) <> (BoolDisj False)
 -- BoolDisj True
+--
 newtype BoolDisj = BoolDisj Bool deriving (Eq, Show)
 
+instance Semigroup BoolDisj where
+    BoolDisj False <> BoolDisj False = BoolDisj False
+    BoolDisj _     <> BoolDisj _     = BoolDisj True
+
+instance Arbitrary BoolDisj where
+    arbitrary = do
+        BoolDisj <$> arbitrary
+
+type BoolDisjAssoc = BoolDisj -> BoolDisj -> BoolDisj -> Bool
 
 
 -- prob 8. 
@@ -103,8 +145,23 @@ newtype BoolDisj = BoolDisj Bool deriving (Eq, Show)
 -- Snd 1
 -- Prelude> Snd 1 <> Snd 2
 -- Snd 1
-
+-- 
 data Or a b = Fst a | Snd b deriving (Eq, Show)
+
+instance Semigroup (Or a b) where
+    Snd x <> _     = Snd x
+    x     <> y     = y
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
+    arbitrary = do
+        ha <- arbitrary
+        hb <- arbitrary
+        elements [Fst ha, Snd hb]
+
+type OrAssoc = Or String String
+            -> Or String String
+            -> Or String String
+            -> Bool
 
 -- prob 9. 
 --
@@ -122,14 +179,17 @@ data Or a b = Fst a | Snd b deriving (Eq, Show)
 --
 -- Hint: This function will eventually be applied to a single value of type 𝑎. But you’ll have multiple functions that can produce a value of type 𝑏. How do we combine multiple values so we have a single 𝑏? This one will probably be tricky! Remember that the type of the value inside of Combine is that of a function. The type of functions should already have an Arbitrary instance that you can reuse for testing this instance.
 
-newtype Combine a b = Combine { unCombine :: (a -> b) } 
+newtype Combine a b = Combine { unCombine :: a -> b } 
+
+instance Semigroup b => Semigroup (Combine a b) where
+    Combine f <> Combine g = Combine $ \x -> f x <> g x
 
 
 -- prob 10.
 --
 -- Hint: We can do something that seems a little more specific and natural to functions now that the input and output types are the same.
 
-newtype Comp a = Comp {unComp :: (a -> a)} 
+newtype Comp a = Comp {unComp :: a -> a} 
 
 
 -- prob 11. 
@@ -155,4 +215,12 @@ main = do
     quickCheck (semigroupAssoc :: TwoAssoc)
     print "problem 4: Three"
     quickCheck (semigroupAssoc :: ThreeAssoc)
+    print "problem 5: Four"
+    quickCheck (semigroupAssoc :: FourAssoc)
+    print "problem 6: BoolConj"
+    quickCheck (semigroupAssoc :: BoolConjAssoc)
+    print "problem 7: BoolDisj"
+    quickCheck (semigroupAssoc :: BoolDisjAssoc)
+    print "problem 8: Or"
+    quickCheck (semigroupAssoc :: OrAssoc)
 
