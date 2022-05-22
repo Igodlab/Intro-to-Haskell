@@ -3,6 +3,9 @@ module SemigroupExercises where
 import Test.QuickCheck
 import Data.Semigroup
 
+
+-- prob 1.
+--
 data Trivial = Trivial deriving (Eq, Show)
 
 instance Semigroup Trivial where
@@ -184,6 +187,11 @@ newtype Combine a b = Combine { unCombine :: a -> b }
 instance Semigroup b => Semigroup (Combine a b) where
     Combine f <> Combine g = Combine $ \x -> f x <> g x
 
+-- not used
+instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
+    arbitrary = do
+        Combine <$> arbitrary
+
 
 -- prob 10.
 --
@@ -191,15 +199,34 @@ instance Semigroup b => Semigroup (Combine a b) where
 
 newtype Comp a = Comp {unComp :: a -> a} 
 
+instance Semigroup a => Semigroup (Comp a) where
+    Comp f <> Comp g = Comp $ \x -> f x <> g x
+
+-- not used
+instance (CoArbitrary a, Arbitrary a) => Arbitrary (Comp a) where
+    arbitrary = do
+        Comp <$> arbitrary
+
 
 -- prob 11. 
+-- 
+data Validation a b = Failure' a | Success' b deriving (Eq, Show)
 
-data Validation a b = Failure a | Success b deriving (Eq, Show)
-
--- instance Semigroup a => Semigroup (Validation a b) where
+instance Semigroup a => Semigroup (Validation a b) where
+    Failure' x <> Failure' y = Failure' (x <> y)
+    Success' x <> _          = Success' x
+    _          <> Success' x = Success' x
     
-    
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Validation a b) where
+    arbitrary = do
+        ha <- arbitrary 
+        hb <- arbitrary
+        elements [Failure' ha, Success' hb]
 
+type ValidationAssoc = Validation String String
+                    -> Validation String String
+                    -> Validation String String
+                    -> Bool
 
 -- Test all the above types
 semigroupAssoc :: (Eq m, Semigroup m) => m -> m -> m -> Bool
@@ -223,4 +250,7 @@ main = do
     quickCheck (semigroupAssoc :: BoolDisjAssoc)
     print "problem 8: Or"
     quickCheck (semigroupAssoc :: OrAssoc)
+    print "no testing for problems 9 & 10"
+    print "problem 11: Validation"
+    quickCheck (semigroupAssoc :: ValidationAssoc)
 
