@@ -90,8 +90,6 @@ instance Monoid a => Monoid (Mem s a) where
 -- 
 f' = Mem $ \s -> ("hi", s + 1)
 
--- main2 = do
-
 -- A correct Monoid for Mem should, given the above code, get the following output:
 --
 -- Prelude> main
