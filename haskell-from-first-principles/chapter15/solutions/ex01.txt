@@ -39,3 +39,13 @@ Note We’re not always going to derive every instance you may want or need in t
 
 
 
+
+##################################
+# page 950: Chapter Exercises
+#           Monoid exercises
+# 
+# see: SemigroupExercises.hs
+# 
+ Given a datatype, implement the Monoid instance. Add Monoid constraints to type variables where needed. For the datatypes you’ve already implemented Semigroup instances for, you need to figure out what the identity value is.
+
+Again, validate all of your instances with QuickCheck. Example scaﬀold is provided for the Trivial type.
