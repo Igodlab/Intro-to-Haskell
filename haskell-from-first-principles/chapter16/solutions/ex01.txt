@@ -1,0 +1,25 @@
+NOTE: To get λ , type SHIFT + CTRL + u followed by 03bb
+NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
+
+
+
+##################################
+# page 970: Exercise
+#           BeKind
+# 
+# 
+
+Given a type signature, determine the kinds of each type variable:
+
+1. What’s the kind of 𝑎?
+a -> a
+# Ans: a :: *
+
+2. What are the kinds of 𝑏 and 𝑇 ? (The 𝑇 is capitalized on purpose!)
+a -> b a -> T (b a)
+# Ans: b :: * -> *
+       T :: * -> *
+
+3. What’s the kind of 𝑐?
+c a b -> c b a
+# Ans: c :: * -> * -> *
