@@ -23,3 +23,15 @@ a -> b a -> T (b a)
 3. What’s the kind of 𝑐?
 c a b -> c b a
 # Ans: c :: * -> * -> *
+
+
+
+
+##################################
+# page 1004: Exercise
+#            BeKind
+# 
+# 
+ Add fmap, parentheses, and function composition to the expres- sion as needed for the expression to typecheck and produce the expected result. It may not always need to go in the same place, so don’t get complacent.
+
+

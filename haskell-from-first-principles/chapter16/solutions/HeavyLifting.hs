@@ -12,7 +12,7 @@ module HeavyLifting where
 -- Prelude> a
 -- [2]
 --
-a = fmap (+1) $ read "[1]" :: [Int]
+a = (+1) <$> read "[1]" :: [Int]
 
 -- 2. 
 --
