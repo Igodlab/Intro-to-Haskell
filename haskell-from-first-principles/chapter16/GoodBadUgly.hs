@@ -28,7 +28,7 @@ data Compose a = Compose Int a deriving (Eq, Show)
 -- preserves structure AND composability
 -- 
 -- instance Functor Compose where
---     fmap f (Compose n a) = Compose (n+1) (f a)
+--     fmap f (Compose n a) = Compose n (f a)
 
 -- preserves structure BUT breaks composability
 -- 
