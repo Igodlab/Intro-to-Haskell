@@ -35,3 +35,10 @@ c a b -> c b a
  Add fmap, parentheses, and function composition to the expres- sion as needed for the expression to typecheck and produce the expected result. It may not always need to go in the same place, so don’t get complacent.
 
 
+
+##################################
+# page 1014: Exercises
+#            Instances of Funct
+#
+# see: ./FunctInstances.hs 
+# 
