@@ -42,3 +42,21 @@ c a b -> c b a
 #
 # see: ./FunctInstances.hs 
 # 
+
+
+
+##################################
+# page 1020: Exercise
+#            Possibly
+#
+# see: ./Possibly.hs 
+# 
+
+
+
+##################################
+# page 1020: Exercise
+#            Either
+#
+# see: ./EitherLike.hs 
+# 
