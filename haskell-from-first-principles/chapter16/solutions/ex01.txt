@@ -55,8 +55,19 @@ c a b -> c b a
 
 
 ##################################
-# page 1020: Exercise
+# page 1023: Exercise
 #            Either
 #
 # see: ./EitherLike.hs 
 # 
+
+
+
+##################################
+# page 1023: Exercise
+#            Either
+#
+# see: ./EitherLike.hs 
+# 
+
+
