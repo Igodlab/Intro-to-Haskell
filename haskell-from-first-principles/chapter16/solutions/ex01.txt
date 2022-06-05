@@ -64,10 +64,12 @@ c a b -> c b a
 
 
 ##################################
-# page 1023: Exercise
-#            Either
+# page 1041: Chapter Exercises
+#            
 #
-# see: ./EitherLike.hs 
+# see: ./DetermineValidFunctor.hs (pg. 1041)
+# see: ./RearrangeArgs.hs         (pg. 1042)
+# see: ./WriteFunctorInstances.hs (pg. 1043)
 # 
 
 
