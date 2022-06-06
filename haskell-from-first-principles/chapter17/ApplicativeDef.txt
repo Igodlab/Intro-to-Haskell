@@ -1,0 +1,27 @@
+# Applicative definition
+
+Applicative Functors are Semigroup Functors
+
+
+
+#######################################################################
+# Some definitions for comparisson
+
+1) ($)   ::   (a -> b) ->   a ->   b # infix to give precedence to the right term
+2) (<$>) ::   (a -> b) -> f a -> f b # infix fmap
+3) (<*>) :: f (a -> b) -> f a -> f b # ap for Applicative
+
+
+# The Semigroup Functor from 3) can be found in the structure: f 
+
+(<>)  :: Semigroup a -> a -> a -> a # Semigroup combines two of the same thing and returns the same
+
+# Disecting Applicative
+
+(<*>) :: f (a -> b) -> f a -> f b 
+
+         f          -> f   -> f    # much like (<>)
+         (a -> b)   -> a   -> a    # much like ($)
+
+
+
