@@ -9,3 +9,13 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # 
 # 
 
+
+##################################
+# page 1076: Exercise
+#            Lookups
+# 
+# see ./Lookups.hs
+#
+
+
+
