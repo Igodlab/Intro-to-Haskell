@@ -14,7 +14,7 @@ Applicative Functors are Semigroup Functors
 
 # The Semigroup Functor from 3) can be found in the structure: f 
 
-(<>)  :: Semigroup a -> a -> a -> a # Semigroup combines two of the same thing and returns the same
+(<>)  :: Semigroup a -> a -> a -> a # Semigroup combines two of the same thing and returns the same thing
 
 # Disecting Applicative
 
