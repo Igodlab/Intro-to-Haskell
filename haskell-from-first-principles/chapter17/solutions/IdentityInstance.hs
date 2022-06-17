@@ -1,4 +1,4 @@
-module ApplicativeIdentity where
+module IdentityInstance where
 
 -- Write an Applicative instance for Identity
 

@@ -19,3 +19,12 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 
 
 
+##################################
+# page 1081: Exercise
+#            Identity Instance
+# 
+# see ./IdentityInstance.hs
+#
+
+
+
