@@ -7,4 +7,4 @@ instance Functor (Constant a) where
 
 instance (Semigroup a, Monoid a) => Applicative (Constant a) where
     pure _ = Constant mempty 
-    Constant x <*> Constant y = Constant $ x <> y 
+    Constant x <*> Constant y = Constant $ x y 

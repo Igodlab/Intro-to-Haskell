@@ -1,5 +1,8 @@
 module MaybeApplicative where
 
+import GHC.Base (liftA2, liftA3)
+
+
 -- f ~ Maybe
 --
 -- (<*>) :: f (a -> b) -> f a -> f b 
@@ -50,5 +53,27 @@ mkPerson :: String -> String -> Maybe Person
 mkPerson n a = Person <$> mkName n <*> mkAddress a
 
 -- ------------------------------------------------------------------------------------------
--- pg. 1084 example: Using the Maybe Applicative
+-- pg. 1098 example: Cow - another example of Applicative with Maybe
+data Cow = Cow { name   :: String
+               , age    :: Int
+               , weight :: Int
+               } deriving (Eq, Show)
+
+-- define the following for lifting over the Maybe Functor 
+noEmpty :: String -> Maybe String
+noEmpty ""  = Nothing
+noEmpty str = Just str
+
+noNeg :: Int -> Maybe Int
+noNeg x | x >= 0    = Just x
+        | otherwise = Nothing
+
+-- normal data constructor build
+cow1 = Cow "Mila" 5 600
+
+-- Applicative data constructor build (over Maybe)
+cow2 = Cow <$> noEmpty "Mila" <*> noNeg 5 <*> noNeg 600
+
+-- Another more sophisticated way
+cow3 = liftA3 Cow (noEmpty "Mila") (noNeg 5) (noNeg 600)
 
