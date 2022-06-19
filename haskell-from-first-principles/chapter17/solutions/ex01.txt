@@ -20,11 +20,18 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 
 
 ##################################
-# page 1081: Exercise
+# page 1079: Exercise
 #            Identity Instance
 # 
 # see ./IdentityInstance.hs
 #
 
 
+
+##################################
+# page 1082: Exercise
+#            Constant Instance
+# 
+# see ./ConstantInstance.hs
+#
 
