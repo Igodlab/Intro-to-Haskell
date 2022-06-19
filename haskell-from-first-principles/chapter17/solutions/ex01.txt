@@ -45,3 +45,12 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 #
 
 
+
+##################################
+# page 1105: Exercise
+#            Fixer Upper
+# 
+# see ./FixerUpper.hs
+#
+
+
