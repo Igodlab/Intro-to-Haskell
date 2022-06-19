@@ -35,3 +35,13 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 # see ./ConstantInstance.hs
 #
 
+
+
+##################################
+# page 1082: Exercise
+#            Constant Instance
+# 
+# see ./ConstantInstance.hs
+#
+
+
