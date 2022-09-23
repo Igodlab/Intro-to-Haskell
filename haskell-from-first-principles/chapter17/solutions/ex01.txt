@@ -54,3 +54,55 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 #
 
 
+
+##################################
+# page 1115: Exercise
+#            Fixer Upper
+# 
+# see ./FixerUpper.hs
+#
+
+
+##################################
+# page 1125: Exercise
+#            List Applicative Exercise
+# 
+# see ./ListApplicative.hs
+#
+
+
+
+##################################
+# page 1127: Exercise
+#            ZipList Applicative Exercise
+# 
+# see ./ZipListApplicative.hs
+#
+
+
+
+
+##################################
+# page 1134: Exercise
+#            VariationsEither
+# 
+# see ./VariationsEither.hs
+#
+
+
+##################################
+# page 1135: Chapter Exercises
+#            Specialize Methods
+# 
+# see ./SpecializeMethods.hs
+#
+
+
+##################################
+# page 1125: Chapter Exercises
+#            Combinations
+# 
+# see ./Combinations.hs
+#
+
+
