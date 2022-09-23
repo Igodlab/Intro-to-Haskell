@@ -29,9 +29,10 @@ c a b -> c b a
 
 ##################################
 # page 1004: Exercise
-#            BeKind
+#            Heavy Lifting
 # 
-# 
+# see: HeavyLifting.hs 
+#
  Add fmap, parentheses, and function composition to the expres- sion as needed for the expression to typecheck and produce the expected result. It may not always need to go in the same place, so don’t get complacent.
 
 
