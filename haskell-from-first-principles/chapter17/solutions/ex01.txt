@@ -38,29 +38,12 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 
 
 ##################################
-# page 1083: Exercise
-#            Constant Instance
-# 
-# see ./ConstantInstance.hs
-#
-
-
-
-##################################
 # page 1105: Exercise
 #            Fixer Upper
 # 
 # see ./FixerUpper.hs
 #
 
-
-
-##################################
-# page 1115: Exercise
-#            Fixer Upper
-# 
-# see ./FixerUpper.hs
-#
 
 
 ##################################
@@ -81,7 +64,6 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 
 
 
-
 ##################################
 # page 1134: Exercise
 #            VariationsEither
@@ -99,7 +81,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 
 
 ##################################
-# page 1125: Chapter Exercises
+# page 1136: Chapter Exercises
 #            Combinations
 # 
 # see ./Combinations.hs
