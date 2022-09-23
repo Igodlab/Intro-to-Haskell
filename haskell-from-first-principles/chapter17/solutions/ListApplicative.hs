@@ -1,6 +1,7 @@
 module ListApplicative where
 
 import Test.QuickCheck 
+import Test.Hspec
 
 
 data List a = Nil | Cons a (List a) deriving (Eq, Show)
@@ -63,9 +64,11 @@ instance Applicative List where
 
 
 -- test it in the repl
-f = Cons (+1) (Cons (*2) Nil)
-v = Cons 1 (Cons 2 Nil)
 -- Prelude> let f = Cons (+1) (Cons (*2) Nil)
 -- Prelude> let v = Cons 1 (Cons 2 Nil)
 -- Prelude> f <*> v
 -- Cons 2 (Cons 3 (Cons 2 (Cons 4 Nil)))
+-- 
+f = Cons (+1) (Cons (*2) Nil)
+v = Cons 1 (Cons 2 Nil)
+
