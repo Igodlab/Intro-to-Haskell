@@ -1,7 +1,13 @@
-module ZipListApplicative where
+#!/usr/bin/env cabal
+{- cabal:
+build-depends:  base
+              , QuickCheck
+              , checkers
+-}
 
 import Test.QuickCheck
-
+import Test.QuickCheck.Checkers
+import Test.QuickCheck.Classes
 
 
 -- Again we have List from ./ListApplicative.hs
@@ -13,19 +19,13 @@ import Test.QuickCheck
 --
 data List a = Nil | Cons a (List a) deriving (Eq, Show)
 
-takeList :: Int -> List a -> List a 
-takeList _ Nil = Nil
-takeList n (Cons x xs) | n <= 0 = Nil
-                       | n == 1 = Cons x Nil
-                       | otherwise = Cons x (takeList (n-1) xs)
-
 appendList :: List a -> List a -> List a
 appendList Nil ls = ls
 appendList (Cons a as) ls = Cons a (appendList as ls)
 
 foldrList :: (a -> b -> b) -> b -> List a -> b
-foldrList _ x Nil = x
-foldrList f x (Cons a as) = f a (foldrList f x as)
+foldrList _ b Nil = b
+foldrList f b (Cons a as) = f a (foldrList f b as)
 
 concatList :: List (List a) -> List a
 concatList = foldrList appendList Nil
@@ -43,23 +43,47 @@ instance Applicative List where
     Nil <*> _   = Nil
     (<*>) fs as = flatMapList (<$> as) fs
 
+instance (Eq a) => EqProp (List a) where 
+    (=-=) = eq
 
--- newtype ZipLst a = ZipList (List a) deriving (Eq, Show)
--- 
--- instance Eq a => EqProp (ZipList a) where
---     xs =-= ys = xs `eq` ys'
---       where 
---         xs' = let (ZipList l) = xs
---               in takeList 3000 l
---         ys' = let (ZipList l) = ys
---               in takeList 3000 l
--- 
--- instance Functor ZipList where
---     fmap f (ZipList xs) = ZipList $ fmap f xs
--- 
--- instance Applicative ZipList where
---     pure = undefined
---     (<*>) = undefined
+instance Arbitrary a => Arbitrary (List a) where
+    arbitrary = frequency [(1, return Nil), (2, Cons <$> arbitrary <*> arbitrary)]
+
+-- ----------------ZipList'------------------------------------------------------------------------
+
+newtype ZipList' a = ZipList' (List a) deriving (Eq, Show)
+
+takeList :: Int -> List a -> List a 
+takeList _ Nil = Nil
+takeList n (Cons x xs) | n <= 0 = Nil
+                       | n == 1 = Cons x Nil
+                       | otherwise = Cons x (takeList (n-1) xs)
+
+-- WARNING! Needs EqProp from Test.QuickCheck.Checkers
+instance Eq a => EqProp (ZipList' a) where
+  xs =-= ys = xs' `eq` ys'
+    where xs' = let (ZipList' l) = xs
+                in takeList 3000 l
+          ys' = let (ZipList' l) = ys
+                in takeList 3000 l 
+
+instance Functor ZipList' where
+    fmap f (ZipList' xs) = ZipList' $ fmap f xs
+
+instance Applicative ZipList' where
+    pure a = ZipList' as 
+      where
+        as = Cons a as
+    (<*>) _ (ZipList' Nil) = ZipList' Nil
+    (<*>) (ZipList' Nil) _ = ZipList' Nil
+    (<*>) (ZipList' fs) (ZipList' as) = ZipList' (go fs as)
+      where
+        go Nil _ = Nil
+        go _ Nil = Nil
+        go (Cons f' fs') (Cons a' as') = Cons (f' a') (go fs' as')
+
+instance Arbitrary a => Arbitrary (ZipList' a) where
+    arbitrary = ZipList' <$> arbitrary
 
 -- The idea is to align a list of functions with a list of values and apply the first function to the first value and so on. The instance should work with infinite lists. Some examples: 
 --
@@ -72,3 +96,11 @@ instance Applicative List where
 -- Prelude> z <*> z'
 -- ZipList' [10,2,9]
 -- Note that the second z' was an infinite list. Check Prelude for functions that can give you what you need. One starts with the letter z, the other with the letter r.
+main :: IO ()
+main = do
+  putStrLn "List tests"
+  quickBatch $ functor (undefined :: List (Int, Float, String))
+  quickBatch $ applicative (undefined :: List (Int, Float, String))
+  putStrLn "ZipList' test"
+  quickBatch $ functor (undefined :: ZipList' (Int, Float, String))
+  quickBatch $ applicative (undefined :: ZipList' (Int, Float, String))
