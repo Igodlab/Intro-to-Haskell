@@ -65,11 +65,11 @@ takeList n (Cons x xs) | n <= 0 = Nil
 
 -- WARNING! Needs EqProp from Test.QuickCheck.Checkers
 instance Eq a => EqProp (ZipList' a) where
-  xs =-= ys = xs' `eq` ys'
-    where xs' = let (ZipList' l) = xs
-                in takeList 3000 l
-          ys' = let (ZipList' l) = ys
-                in takeList 3000 l 
+    xs =-= ys = xs' `eq` ys'
+      where xs' = let (ZipList' l) = xs
+                  in takeList 3000 l
+            ys' = let (ZipList' l) = ys
+                  in takeList 3000 l 
 
 instance Functor ZipList' where
     fmap f (ZipList' xs) = ZipList' $ fmap f xs
