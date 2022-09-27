@@ -4,6 +4,10 @@ build-depends:  base
               , QuickCheck
               , checkers
 -}
+--
+-- module called by cabal run is: main
+-- thus custom module name below is not necessary!
+-- module ZipListApplicative where
 
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
