@@ -1,4 +1,14 @@
-module BadMonoid where
+#!/usr/bin/env cabal
+{- cabal:
+build-depends:  base
+              , QuickCheck
+              , checkers
+              , hspec
+              , hspec-contrib
+-}
+
+-- module BadMonoid where
+--
 
 import Data.Monoid
 import Test.QuickCheck
@@ -22,7 +32,7 @@ instance Semigroup Bull where
     (<>) _ _ = Fools
 
 instance EqProp Bull where
-    (=.=) = eq
+    (=-=) = eq
 
 main :: IO ()
 main = quickBatch (monoid Twoo)
