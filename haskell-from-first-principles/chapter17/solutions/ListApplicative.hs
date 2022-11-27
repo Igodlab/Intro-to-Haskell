@@ -60,7 +60,7 @@ instance Applicative List where
     pure a = Cons a Nil
     Nil <*> _   = Nil
     _   <*> Nil = Nil
-    fs <*> xs = flatMapList (<$> xs) fs
+    fs  <*> xs  = flatMapList (<$> xs) fs
 
 
 -- test it in the repl

@@ -5,7 +5,7 @@ build-depends:  base
               , checkers
 -}
 --
--- module called by cabal run is: main
+-- module called by 'cabal run' is: main
 -- thus custom module name below is not necessary!
 -- module ZipListApplicative where
 
@@ -13,6 +13,8 @@ import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
 
+
+-- ------------------List--------------------------------------------------------------------------
 
 -- Again we have List from ./ListApplicative.hs
 -- thus we re-write all helper functions to define Applicative
@@ -80,11 +82,11 @@ instance Applicative ZipList' where
         as = Cons a as
     (<*>) _ (ZipList' Nil) = ZipList' Nil
     (<*>) (ZipList' Nil) _ = ZipList' Nil
-    (<*>) (ZipList' fs) (ZipList' as) = ZipList' (go fs as)
+    (<*>) (ZipList' fs) (ZipList' as) = ZipList' (g fs as)
       where
-        go Nil _ = Nil
-        go _ Nil = Nil
-        go (Cons f' fs') (Cons a' as') = Cons (f' a') (go fs' as')
+        g Nil _ = Nil
+        g _ Nil = Nil
+        g (Cons f' fs') (Cons a' as') = Cons (f' a') (g fs' as')
 
 instance Arbitrary a => Arbitrary (ZipList' a) where
     arbitrary = ZipList' <$> arbitrary
@@ -100,11 +102,22 @@ instance Arbitrary a => Arbitrary (ZipList' a) where
 -- Prelude> z <*> z'
 -- ZipList' [10,2,9]
 -- Note that the second z' was an infinite list. Check Prelude for functions that can give you what you need. One starts with the letter z, the other with the letter r.
+
+toMyList = foldr Cons Nil
+
+z = ZipList' $ toMyList [(+9), (*2), (+8)]
+z' = ZipList' $ toMyList [1..3]
+z'' = ZipList' $ toMyList (repeat 1)
+
 main :: IO ()
 main = do
-  putStrLn "List tests"
-  quickBatch $ functor (undefined :: List (Int, Float, String))
-  quickBatch $ applicative (undefined :: List (Int, Float, String))
-  putStrLn "ZipList' test"
-  quickBatch $ functor (undefined :: ZipList' (Int, Float, String))
-  quickBatch $ applicative (undefined :: ZipList' (Int, Float, String))
+    putStrLn "try: z <*> z'"
+    print (z <*> z')
+    putStrLn "try: z <*> z''"
+    print (z <*> z'')
+    putStrLn "List tests"
+    quickBatch $ functor (undefined :: List (Int, Float, String))
+    quickBatch $ applicative (undefined :: List (Int, Float, String))
+    putStrLn "ZipList' test"
+    quickBatch $ functor (undefined :: ZipList' (Int, Float, String))
+    quickBatch $ applicative (undefined :: ZipList' (Int, Float, String))

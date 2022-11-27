@@ -81,7 +81,7 @@ NOTE: To get ⊥ , type SHIFT + CTRL + u followed by 022a5
 
 
 ##################################
-# page 1136: Chapter Exercises
+# page 1137: Chapter Exercises
 #            Combinations
 # 
 # see ./Combinations.hs
