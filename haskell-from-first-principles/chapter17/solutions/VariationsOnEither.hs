@@ -24,4 +24,4 @@ instance Semigroup e => Applicative (Validation' e) where
 main :: IO ()
 main = do
     putStrLn "List tests"
-    quickBatch $ functor (undefined :: Validation' (Int) (Int))
+    quickBatch $ functor (undefined :: Validation' (Int, Float, String) (Int, Float, String))
