@@ -68,7 +68,7 @@ a) foldr (++) ["woot", "WOOT", "woot"]
 # Ans: foldr (++) [] ["woot", "WOOT", "woot"]
 
 b) foldr max [] "fear is the little death"
-# Ans: foldr max '\00` "fear is the little death"
+# Ans: foldr max '\00' "fear is the little death"
 
 c) foldr and True [False, True]               
 # Ans: foldr (&&) True [False, True]
