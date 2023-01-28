@@ -18,19 +18,47 @@ caesarCharEncode n x | not $ DC.isAlpha x        = x
 caesarCharDecode :: Int -> DC.Char -> DC.Char
 caesarCharDecode n = caesarCharEncode $ negate n 
 
-caesarEncode :: Int -> [DC.Char] -> [DC.Char]
-caesarEncode n = map $ caesarCharEncode n
+caesarEncode :: IO () 
+caesarEncode = do
+    putStrLn "enter an Integer number:"
+    nStr <- getLine 
+    putStrLn "\nenter your word:"
+    w <- getLine
+    let n = read nStr :: Int
+    putStrLn $ show (map (caesarCharEncode n) w)
 
-caesarDecode :: Int -> [DC.Char] -> [DC.Char]
-caesarDecode n = map $ caesarCharDecode n
+caesarDecode :: IO () 
+caesarDecode = do
+    putStrLn "enter an Integer number:"
+    nStr <- getLine 
+    putStrLn "\nenter your word:"
+    w <- getLine
+    let n = read nStr :: Int
+    putStrLn $ show (map (caesarCharDecode n) w)
 
 -- Vignere cipher
 vignereCharEncode :: DC.Char -> DC.Char -> DC.Char
-vignereCharEncode n x | not $ DC.isAlpha x = x
+vignereCharEncode n x | (not $ DC.isAlpha x) ||
+                        (not $ DC.isAlpha n) = x
                       | otherwise          = let lw = length ['a'..(DC.toLower n)] - 1
                                              in caesarCharEncode lw x
   where
     lw = length ['a'..(DC.toLower x)] - 1
 
-vignereEncode :: [DC.Char] -> [DC.Char] -> [DC.Char]
-vignereEncode x y = x ++ y
+vignereEncodeInline :: [DC.Char] -> [DC.Char] -> [DC.Char]
+vignereEncodeInline key w = iterate keyRep w
+  where
+    keyRep = take (length w) $ cycle key
+
+    iterate :: [DC.Char] -> [DC.Char] -> [DC.Char]
+    iterate _ [] = []
+    iterate (k:ks) (x:xs) | x == ' '  = ' ' : iterate (k:ks) xs
+                          | otherwise = vignereCharEncode k x : iterate ks xs
+
+vignereEncode :: IO ()
+vignereEncode = do
+    putStrLn "Enter a key word:"
+    k <- getLine
+    putStrLn "\nEnter your word:"
+    w <- getLine 
+    putStrLn $ show (vignereEncodeInline k w)
