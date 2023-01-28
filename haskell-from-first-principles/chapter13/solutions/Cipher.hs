@@ -2,24 +2,35 @@ module Cipher where
 
 import qualified Data.Char as DC
 
-caesarEncode :: Int -> Char -> Char
-caesarEncode 0 x = x
-caesarEncode n x | x == 'a' && pm == 1    = caesarEncode (n + pm) 'z'
-                 | x == 'z' && pm == (-1) = caesarEncode (n + pm) 'a'
-                 | x == 'A' && pm == 1    = caesarEncode (n + pm) 'Z'
-                 | x == 'Z' && pm == (-1) = caesarEncode (n + pm) 'A'
-                 | otherwise              = caesarEncode (n + pm) (shft x)
+-- Caesar cipher
+caesarCharEncode :: Int -> DC.Char -> DC.Char
+caesarCharEncode 0 x = x 
+caesarCharEncode n x | not $ DC.isAlpha x        = x 
+                 | xLow == 'z' && pm == (-1) = caesarCharEncode (n + pm) (isCap 'a')
+                 | xLow == 'a' && pm == 1    = caesarCharEncode (n + pm) (isCap 'z')
+                 | otherwise                 = caesarCharEncode (n + pm) $ (isCap . shift) x
   where
-    (pm, shft) = if n < 0 then (1, pred) else (-1, succ)
+    xLow        = DC.toLower x
+    isCap       = if (DC.isLower x) then DC.toLower else DC.toUpper
+    (pm, shift) = if n >= 0 then (-1, succ) else (1, pred)
 
--- decoder:
-caesarDecode :: Int -> Char -> Char
-caesarDecode 0 x = x
-caesarDecode n x | x == 'a' && pm == 1    = caesarDecode (n - pm) 'z'
-                 | x == 'z' && pm == (-1) = caesarDecode (n - pm) 'a'
-                 | x == 'A' && pm == 1    = caesarDecode (n - pm) 'Z'
-                 | x == 'Z' && pm == (-1) = caesarDecode (n - pm) 'A'
-                 | otherwise              = caesarDecode (n - pm) (shft x)
+
+caesarCharDecode :: Int -> DC.Char -> DC.Char
+caesarCharDecode n = caesarCharEncode $ negate n 
+
+caesarEncode :: Int -> [DC.Char] -> [DC.Char]
+caesarEncode n = map $ caesarCharEncode n
+
+caesarDecode :: Int -> [DC.Char] -> [DC.Char]
+caesarDecode n = map $ caesarCharDecode n
+
+-- Vignere cipher
+vignereCharEncode :: DC.Char -> DC.Char -> DC.Char
+vignereCharEncode n x | not $ DC.isAlpha x = x
+                      | otherwise          = let lw = length ['a'..(DC.toLower n)] - 1
+                                             in caesarCharEncode lw x
   where
-    (pm, shft) = if n > 0 then (1, pred) else (-1, succ)
+    lw = length ['a'..(DC.toLower x)] - 1
 
+vignereEncode :: [DC.Char] -> [DC.Char] -> [DC.Char]
+vignereEncode x y = x ++ y
